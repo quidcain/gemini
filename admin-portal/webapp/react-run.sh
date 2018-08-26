@@ -1,0 +1,1 @@
+node -r dotenv/config ./node_modules/.bin/react-scripts $1 $2

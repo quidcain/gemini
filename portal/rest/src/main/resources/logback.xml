@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    If using a different logback.xml (via the logging.config property), include the
+    <include resource="org/springframework/boot/logging/logback/base.xml"/> line
+    to start with a nice default configuration.
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="com.gemini" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.springframework.ws.client.MessageTracing" level="TRACE"/>
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG"/>
+</configuration>

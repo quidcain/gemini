@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="libs/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="libs/tether/css/tether.min.css">
+  <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <title>Educational</title>
+</head>
+<body onload="auth();" class="entry">
+
+<div class="container-fluid profile entrollment">
+  <div class="row content">
+    <div class="col-md-1 navigation-section violet d-flex align-items-center" onclick="window.open('s-enrollment.html', '_self')">
+      <i class="icon-arrow mirror"></i>
+    </div>
+    <div class="col-md-7 content-section">
+      <div class="title">
+        <div class="description mb30"><h2>Pre-Enrollment <span>Record</span></h2></div>
+        <span class="f20slg"><span class="f20slb">Let’s create a new pre-enrollment record.</span> Please select the Region, Grade Level and School that your child will be attending:</span>
+      </div>
+      <div class="body d-flex align-items-center flex-column justify-content-end">
+        <form id="enrollment-form" action="preenrollment" method="POST" class="mt50">
+          <div class="row plr15">
+          <div class="group form-group has-feedback col-md-6 pl-0 pr50">
+            <input class="inputMaterial" type="text" name="region" required>
+            <i class="n icon-gps fs26"></i>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Region Example</label>
+          </div>
+          <div class="group form-group has-feedback col-md-6 pl50 pr-0 numeric">
+            <input class="inputMaterial" type="text" name="level" required>
+            <i class="n icon-teacher fs26"></i>
+            <i class="icon-top"></i>
+            <i class="icon-down"></i>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Grade Level</label>
+          </div>
+          <div class="group form-group has-feedback col-md-6 pl-0 pr50">
+            <input class="inputMaterial" type="text" name="school" required>
+            <i class="n fas fa-university fs26"></i>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>School Name</label>
+          </div>
+          <div class="group form-group has-feedback col-md-6 pl50 pr-0">
+            <input class="inputMaterial" type="text" name="adress" required>
+            <i class="n fas fa-map-marker-alt fs26"></i>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>School Adress</label>
+          </div>
+        </div>
+        <div class="row mt50 bt1p pt40">
+          <div class="col-md-12"><button class="button-green mr30 mob-mb30px" type="submit"><span>s</span>Submit</button></div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4 illustration-section d-flex align-items-center text-center">
+      <div class="illustration"><img src="img/entrollment-illustration.png" alt=""></div>
+    </div>
+  </div>
+  <div class="row footer d-flex align-items-center">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+      <span>© 2018 All Rights Reserved</span>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="libs/jquery/jquery-3.3.1.min.js"></script>
+<script src="libs/bootstrap/js/popper.min.js"></script>
+<script src="libs/tether/js/tether.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/js/bootstrapValidator.min.js"></script>
+<script src="libs/main/scripts.js"></script>
+</html>

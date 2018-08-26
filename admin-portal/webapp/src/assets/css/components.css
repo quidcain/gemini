@@ -1,0 +1,77 @@
+.com-category {
+    position: relative;
+    padding: 10px;
+}
+
+.com-category .category-main-content {
+    border-radius: 5px;
+    background: white;
+    padding: 10px;
+    box-shadow: 1px 0px 13px;
+}
+
+.com-category .category-main-content .cat-title {
+    text-align: right;
+    font-size: 16px;
+    color: #bdbdbd;
+    margin-bottom: 10px;
+}
+
+.com-category .category-main-content .cat-value {
+    text-align: right;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+.com-category .category-main-content .cat-div {
+    height: 1px;
+    background: #cdcdcd;
+    margin-bottom: 10px;
+}
+
+.com-category .category-main-content .cat-bottom {
+    display: flex;
+    align-items: center;
+}
+
+.com-category .category-main-content .cat-bottom .cat-smallicon {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.com-category .category-main-content .cat-bottom .cat-icondesc {
+    font-size: 13px;
+}
+
+.com-category .category-main-mark {
+    width: 100%;
+    position: absolute;
+    top: -10px;
+    left: 25px;
+}
+
+.com-category .category-main-mark .mark-container {
+    border-radius: 5px;
+    /* max-width: 100px; */
+    width: 26%;
+    padding-top: 26%;
+    position: relative;
+}
+
+.com-category .category-main-mark .mark-container .aspect-resize {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.com-category .category-main-mark i {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: calc(50% - 8px);
+    left: calc(13% - 8px);
+}

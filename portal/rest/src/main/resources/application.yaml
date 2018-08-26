@@ -1,0 +1,146 @@
+server:
+  context-path: @api.base.context-path@
+  port: 8081
+  session:
+    timeout: @session.timeout@  # in seconds
+    cookie:
+      max-age: @cookie.max-age@ # in seconds
+    
+#management:
+#  port: 8083
+#  security:
+#    enabled: false
+
+srs:
+  version: @srs.version@
+
+spring:
+  main:
+    web-environment: true
+  mail:
+    host: @mail.host@
+    port: @mail.port@
+    username: @mail.username@
+    password: @mail.password@
+    properties:
+      mail.smtp.auth: @mail.smtp.auth@
+      mail.smtp.starttls.enable: @mail.smtp.starttls.enable@
+    test-connection: false
+  jpa:
+    hibernate:
+      ddl-auto: @main.db.jpa.mode@
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate.type: trace
+      hibernate.jdbc.time_zone: America/Puerto_Rico
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: @main.db.jdbc.url@
+    username: @main.db.user@
+    password: @main.db.password@
+    driver-class-name: @main.db.driver.name@
+    hikari:
+      maximum-pool-size: 300
+      max-lifetime: 600000
+
+    platform: @main.db.platform@
+  jmx:
+    default-domain: @war.name@-${srs.version}
+
+  thymeleaf:
+    enabled: false #disabled MVC
+security:
+  basic:
+    enabled: true
+#    Since we are using GMAIL, we have to use the same email address because GMAIL doesn't allow to change the FROM property
+email:
+  from: @email.from@
+website:
+  url: @website.base.url@
+  context-path: @website.base.context-path@
+logging:
+  config: file:/Users/fran/Documents/Projects/UpperCase/project-gemini/portal/rest/src/main/resources/logback.xml
+
+property:
+  load:
+    test: Working
+
+
+google:
+  recaptcha:
+    secret: @google.recaptcha.secret.key@
+    active: @google.recaptcha.activate@
+oracle:
+  proxy:
+    host: @oracle.proxy.host@
+    port: @oracle.proxy.port@
+
+smax:
+  interface:
+    use: @smax.interface.in-use@
+
+#move this to a different properties file
+messages:
+  general:
+    unknown.error: "Ha ocurrido un error disculpe el incoveniente"
+    missing.required.fields: "Faltan campos requeridos"
+  fields:
+      relationType: "Relación con el estudiante"
+      firstName: "Nombre"
+      middleName: "Segundo Nombre"
+      lastName: "Apellidos"
+      dateOfBirth: "Fecha de Nacimiento"
+      studentNumber: "Número del SIE"
+      ssn: "Seguro Social"
+      gender: "Género"
+      lastSsn: "Último 4 dígitos Seguro social"
+      income: "Ingreso"
+      totalFamilyMembers: "Total de miembros de la familia"
+      physical.line1: "Dirección Residencial Línea 1"
+      physical.city: "Dirección Residencial Ciudad"
+      physical.zipcode: "Dirección Residencial Código postal"
+      physical.latitude: "Debe seleccionar un localizar su direccion en el mapa"
+      physical.longitude: 
+      postal.line1: "Dirección Postal: Línea 1"
+      postal.city: "Dirección Postal: Ciudad"
+      postal.zipcode: "Dirección Postal: Código postal"
+      language: "Lenguaje"
+      citizenship: "Cuidadanía"
+      ethnicCodes: "Debe seleccionar al menos un codigo étnico"
+      reason: "Debe seleccionar una razón"
+      schoolId: "Debe escoger escuela"
+  search:
+    student.missing.required.fields: "Campos Requeridos (Último SSN o Número Estudiante)"
+  user:
+    missing.required.fields: "Faltan campos requeridos [Nombre, Apellidos, Fecha de Nacimiento, Relación con el Estudiante]"
+    already.exists: "Usuario existente"
+    min.age.validation: "Usuario debe tener 18 años o más"
+    reset.password.invalid: "No se pudo completar el reinicio de su contraseña"
+    password.mismatch: "Contraseñas no coinciden"
+    error.saving.profile: "Error al grabar datos del usuario"
+    invalid.forgot.password.request: "Solicitud de cambio de contraseña inválida"
+    cancel.reset.password.invalid: "Solicitud de cancelar reinicio de contraseña inválida"
+  enrollment:
+    school.available.space.validation: "no tiene espacio disponible"
+    invalid.address.postal: "Dirección postal inválida"
+    invalid.address.residential: "Dirección residencial inválida"
+    already.active: "Posee una matrícula activa, cargando registro"
+    already.exists: "Matrícula ya existe en el sistema"
+    already.submitted: "Usted ya sometió Matrícula para este estudiante"
+    already.exists.sie: "Estudiante existe en el SIE, intente localizarlo"
+    occupational.validation: "Debe seleccionar al menos una escuela y un programa"
+    regular.validation: "Dos opciones de escuelas son requeridas"
+    occupational.school.validation: "Debe seleccionar una escuela"
+    occupational.program.validation: "Debe seleccionar al menos un programa"
+    error: "Ha occurrido un error guardando su matrícula"
+    student.max.age.validation: "Estudiante posse más de 23 años"
+    student.dob.future.date: "Fecha de naciemiento en Futuro"
+    already.ssn.sie: "No puede utilizar ese Seguro Social"
+    max.exceed.per.user: "Ha excedido el máximo de solicitudes permitido"
+    school.exclusion.list: "Hemos detectado que el estudiante se encuentra en una escuela que no puede procesar matrícula en estos momentos"
+
+
+
+
+

@@ -1,0 +1,38 @@
+.dashboard .main .display .panel.panel-small {
+    max-width: 600px;
+}
+
+.dashboard .main .display .panel .panel-heading h2 {
+    color: white;
+}
+
+.dashboard .main .display .panel .form .panel-body {
+    padding: 0;
+}
+
+.dashboard .main .display .panel .form .panel-body .content-section {
+    /* padding-left: 2%; */
+    padding: 0;
+    /* border: red solid 1px; */
+}
+
+.dashboard .main .display .panel .form .panel-body .content-section .title {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    height: 50%;
+    padding: 40px;
+    padding-bottom: 20px;
+}
+
+.dashboard .main .display .panel .form .panel-body .content-section .title .description h2 {
+    font-size: 40px;
+}
+
+.dashboard .main .display .panel .form .panel-body .content-section .body {
+    background-color: #fff;
+    width: 100%;
+    height: 50%;
+    padding: 40px;
+    padding-top: 20px;
+}

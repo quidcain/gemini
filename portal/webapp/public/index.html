@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+
+    <meta charset="UTF-8">
+    <link href="%PUBLIC_URL%/libs/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="%PUBLIC_URL%/libs/tether/css/tether.min.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/libs/bootstrap/css/bootstrap.min.css">
+    <link href="%PUBLIC_URL%/css/styles.css" rel="stylesheet">
+    <!--<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">-->
+    <!--<link rel="icon" href="favicon.ico" type="image/x-icon"/>-->
+    <script type="text/javascript">
+        if (navigator.appName == 'Microsoft Internet Explorer'
+            || !!(navigator.userAgent.match(/Trident/)
+                || navigator.userAgent.match(/rv:11/))
+            || (typeof $.browser !== "undefined" && $.browser.msie == 1)) {
+            window.location = "/registro-statics/unsupported-browsers.html";
+        }
+    </script>
+
+    <title>SIE-Registro</title>
+</head>
+<body class="entry">
+<noscript>
+    Necesita habilitar JavaScript para poder utilizar esta aplicaci&oacute;n
+</noscript>
+<div id="root"></div>
+</body>
+<script src='https://www.google.com/recaptcha/api.js?hl=es'>
+    window.recaptchaOptions = {
+        lang: 'es'
+    }
+</script>
+
+<!--[if IE]>
+<script src="%PUBLIC_URL%/js/browser-polyfill.min.js"></script>
+<![endif]-->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52212806-3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-52212806-3', {'app_name': 'SIE-Registro', 'app_version': '1.0.7_PMAX'});
+
+    // ga('send', 'screenview', {
+    //     'appName': 'myAppName',
+    //     'screenName': 'Home'
+    // });
+
+</script>
+
+<script src="%PUBLIC_URL%/libs/jquery/jquery-3.3.1.min.js"></script>
+<script src="%PUBLIC_URL%/libs/bootstrap/js/popper.min.js"></script>
+<script src="%PUBLIC_URL%/libs/tether/js/tether.min.js"></script>
+<script src="%PUBLIC_URL%/libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="%PUBLIC_URL%/libs/bootstrap/js/bootstrapValidator.min.js"></script>
+<script src="%PUBLIC_URL%/js/scripts.js"></script>
+</html>

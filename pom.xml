@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.10.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
+    <groupId>com.gemini</groupId>
+    <artifactId>project-gemini</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Gemini :: ROOT</name>
+
+    <modules>
+        <module>srs-common</module>
+        <module>portal</module>
+        <module>admin-portal</module>
+        <module>enum-codes-generation</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.7</java.version>
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <war.name>srs-api</war.name>
+                <admin.war.name>srs-admin-api</admin.war.name>
+                <!--main db props-->
+                <!--<main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>-->
+                <!--<main.db.user>PRDE_SRS</main.db.user>-->
+                <!--<main.db.password>pr234Srs987</main.db.password>-->
+                <!--<main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>-->
+                <!--<main.db.platform>oracle</main.db.platform>-->
+                <!--<main.db.jpa.mode>none</main.db.jpa.mode>-->
+
+                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
+                <main.db.user>PRDE_SRS</main.db.user>
+                <main.db.password>PRDE_SRS</main.db.password>
+                <main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>
+                <main.db.platform>oracle</main.db.platform>
+                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <!--mail props-->
+                <email.from>DE-SIE@de.pr.gov</email.from>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>de.pentaho@gmail.com</mail.username>
+                <mail.password>d3r3ply2@!4</mail.password>
+                <mail.test-conection>true</mail.test-conection>
+                <!--mail extra props-->
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <!--server props-->
+                <website.base.url>http://localhost:3000</website.base.url>
+                <website.base.context-path>/srs</website.base.context-path>
+                <website.admin.base.context-path>/srs-admin</website.admin.base.context-path>
+                <api.base.context-path>/srs-api</api.base.context-path>
+                <!--time are given in seconds -->
+                <session.timeout>900</session.timeout>
+                <cookie.max-age>900</cookie.max-age>
+                <!--google reCAPTCHA-->
+                <google.recaptcha.secret.key>6LfwnkkUAAAAAGFlz-H8iIGF7ZsNuvRcZxKi5xwE</google.recaptcha.secret.key>
+                <google.recaptcha.activate>true</google.recaptcha.activate>
+                <!--oracle-->
+                <oracle.proxy.host></oracle.proxy.host>
+                <oracle.proxy.port></oracle.proxy.port>
+                <!--smax in-use-->
+                <smax.interface.in-use>real</smax.interface.in-use>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-aws-mercury</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <war.name>srs-api</war.name>
+                <admin.war.name>srs-admin-api</admin.war.name>
+                <!--main db props-->
+                <main.db.jdbc.url>jdbc:mysql://localhost:3306/SRS</main.db.jdbc.url>
+                <main.db.user>srs</main.db.user>
+                <main.db.password>12345678</main.db.password>
+                <main.db.driver.name>com.mysql.jdbc.Driver</main.db.driver.name>
+                <main.db.platform>mysql</main.db.platform>
+                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <!--smax db props-->
+                <smax.db.jdbc.url>jdbc:mysql://localhost:3306/SRS</smax.db.jdbc.url>
+                <smax.db.user>srs</smax.db.user>
+                <smax.db.password>12345678</smax.db.password>
+                <smax.db.driver.name>com.mysql.jdbc.Driver</smax.db.driver.name>
+                <!--mail props-->
+                <email.from>DE-SIE@de.pr.gov</email.from>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>de.pentaho@gmail.com</mail.username>
+                <mail.password>d3r3ply2@!4</mail.password>
+                <mail.test-conection>true</mail.test-conection>
+                <!--mail extra props-->
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <!--server props-->
+                <website.base.url>http://localhost:3000</website.base.url>
+                <website.base.context-path>/srs</website.base.context-path>
+                <website.admin.base.context-path>/srs-admin</website.admin.base.context-path>
+                <api.base.context-path>/srs-api</api.base.context-path>
+                <!--time are given in seconds -->
+                <session.timeout>900</session.timeout>
+                <cookie.max-age>900</cookie.max-age>
+                <!--google reCAPTCHA-->
+                <google.recaptcha.secret.key>6LfwnkkUAAAAAGFlz-H8iIGF7ZsNuvRcZxKi5xwE</google.recaptcha.secret.key>
+                <google.recaptcha.activate>true</google.recaptcha.activate>
+                <!--oracle-->
+                <oracle.proxy.host></oracle.proxy.host>
+                <oracle.proxy.port></oracle.proxy.port>
+                <!--smax in-use-->
+                <smax.interface.in-use>mock</smax.interface.in-use>
+            </properties>
+        </profile>
+        <profile>
+            <id>tmaxio-dev-test</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <war.name>srs-api</war.name>
+                <admin.war.name>srs-admin-api</admin.war.name>
+                <!--main db props-->
+                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
+                <main.db.user>PRDE_SRS</main.db.user>
+                <main.db.password>PRDE_SRS</main.db.password>
+                <main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>
+                <main.db.platform>oracle</main.db.platform>
+                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <!--smax db props-->
+                <smax.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</smax.db.jdbc.url>
+                <smax.db.user>PRDE_SRS</smax.db.user>
+                <smax.db.password>depl0y2@!8</smax.db.password>
+                <smax.db.driver.name>oracle.jdbc.driver.OracleDriver</smax.db.driver.name>
+                <!--mail props-->
+                <email.from>DE-SIE@de.pr.gov</email.from>
+                <mail.host>smtp.gmail.com</mail.host>
+                <mail.port>587</mail.port>
+                <mail.username>de.pentaho@gmail.com</mail.username>
+                <mail.password>d3r3ply2@!4</mail.password>
+                <mail.test-conection>true</mail.test-conection>
+                <!--mail extra props-->
+                <mail.smtp.auth>true</mail.smtp.auth>
+                <mail.smtp.starttls.enable>true</mail.smtp.starttls.enable>
+                <!--server props-->
+                <website.base.url>http://localhost:3000</website.base.url>
+                <website.base.context-path>/srs</website.base.context-path>
+                <website.admin.base.context-path>/srs-admin</website.admin.base.context-path>
+                <api.base.context-path>/srs-api</api.base.context-path>
+                <!--time are given in seconds -->
+                <session.timeout>900</session.timeout>
+                <cookie.max-age>900</cookie.max-age>
+                <!--google reCAPTCHA-->
+                <google.recaptcha.secret.key>6LfwnkkUAAAAAGFlz-H8iIGF7ZsNuvRcZxKi5xwE</google.recaptcha.secret.key>
+                <google.recaptcha.activate>true</google.recaptcha.activate>
+                <!--oracle-->
+                <oracle.proxy.host></oracle.proxy.host>
+                <oracle.proxy.port></oracle.proxy.port>
+                <!--smax in-use-->
+                <smax.interface.in-use>real</smax.interface.in-use>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>tmaxio</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <war.name>schoolmax_tmax2-api</war.name>
+                <admin.war.name>schoolmax_tmax2-admin-api</admin.war.name>
+                <!--main db props-->
+                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
+                <main.db.user>PRDE_SRS</main.db.user>
+                <main.db.password>PRDE_SRS</main.db.password>
+                <main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>
+                <main.db.platform>oracle</main.db.platform>
+                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <!--smax db props-->
+                <smax.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</smax.db.jdbc.url>
+                <smax.db.user>PRDE_SRS</smax.db.user>
+                <smax.db.password>depl0y2@!8</smax.db.password>
+                <smax.db.driver.name>oracle.jdbc.driver.OracleDriver</smax.db.driver.name>
+                <!--mail props-->
+                <email.from>DE-SIE@de.pr.gov</email.from>
+                <mail.host>auohs-smtp.oracle.com</mail.host>
+                <mail.port></mail.port>
+                <mail.username></mail.username>
+                <mail.password></mail.password>
+                <mail.test-conection>false</mail.test-conection>
+                <!--mail extra props-->
+                <mail.smtp.auth></mail.smtp.auth>
+                <mail.smtp.starttls.enable></mail.smtp.starttls.enable>
+                <!--server props-->
+                <website.base.url>https://prdesietest.dde.pr</website.base.url>
+                <website.base.context-path>/schoolmax_tmax2</website.base.context-path>
+                <website.admin.base.context-path>/schoolmax_tmax2-admin</website.admin.base.context-path>
+                <api.base.context-path>/schoolmax_tmax2-api</api.base.context-path>
+                <!--time are given in seconds -->
+                <session.timeout>900</session.timeout>
+                <cookie.max-age>900</cookie.max-age>
+                <!--google reCAPTCHA-->
+                <google.recaptcha.secret.key>6Lffy0sUAAAAAJ5r6JXLUMuns1KnrQkWwzPFnDpZ</google.recaptcha.secret.key>
+                <google.recaptcha.activate>true</google.recaptcha.activate>
+                <!--oracle-->
+                <oracle.proxy.host>omcs-proxy.oracleoutsourcing.com</oracle.proxy.host>
+                <oracle.proxy.port>80</oracle.proxy.port>
+                <!--smax in-use-->
+                <smax.interface.in-use>real</smax.interface.in-use>
+            </properties>
+        </profile>
+        <profile>
+            <id>pmaxio</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <war.name>registro-api</war.name>
+                <admin.war.name>registro-admin-api</admin.war.name>
+                <!--main db props-->
+                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
+                <main.db.user>PRDE_SRS</main.db.user>
+                <main.db.password>pr234Srs987</main.db.password>
+                <main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>
+                <main.db.platform>oracle</main.db.platform>
+                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <!--smax db props-->
+                <smax.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM</smax.db.jdbc.url>
+                <smax.db.user>PRDE_SRS</smax.db.user>
+                <smax.db.password>pr234Srs987</smax.db.password>
+                <smax.db.driver.name>oracle.jdbc.driver.OracleDriver</smax.db.driver.name>
+                <!--mail props-->
+                <email.from>DE-SIE@de.pr.gov</email.from>
+                <mail.host>auohs-smtp.oracle.com</mail.host>
+                <mail.port></mail.port>
+                <mail.username></mail.username>
+                <mail.password></mail.password>
+                <mail.test-conection>false</mail.test-conection>
+                <!--mail extra props-->
+                <mail.smtp.auth></mail.smtp.auth>
+                <mail.smtp.starttls.enable></mail.smtp.starttls.enable>
+                <!--server props-->
+                <website.base.url>https://prdesieprod.dde.pr</website.base.url>
+                <website.base.context-path>/registro</website.base.context-path>
+                <website.admin.base.context-path>/registro-admin</website.admin.base.context-path>
+                <api.base.context-path>/registro-api</api.base.context-path>
+                <!--time are given in seconds -->
+                <session.timeout>1800</session.timeout>
+                <cookie.max-age>1800</cookie.max-age>
+                <!--google reCAPTCHA-->
+                <google.recaptcha.secret.key>6Lffy0sUAAAAAJ5r6JXLUMuns1KnrQkWwzPFnDpZ</google.recaptcha.secret.key>
+                <google.recaptcha.activate>true</google.recaptcha.activate>
+                <!--oracle-->
+                <oracle.proxy.host>omcs-proxy.oracleoutsourcing.com</oracle.proxy.host>
+                <oracle.proxy.port>80</oracle.proxy.port>
+                <!--smax in-use-->
+                <smax.interface.in-use>real</smax.interface.in-use>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>24.0-android</version>
+            </dependency>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.9.9</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP-java7</artifactId>
+                <version>2.4.13</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle</groupId>
+                <artifactId>ojdbc6</artifactId>
+                <version>11.2.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+            <dependency>
+                <groupId>com.gemini</groupId>
+                <artifactId>srs-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>mvnrepository</id>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

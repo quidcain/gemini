@@ -1,0 +1,46 @@
+{
+  "name": "project-gemini",
+  "version": "1.0.9_PMAX",
+  "private": true,
+  "homepage": "https://prdesieprod.dde.pr/registro/",
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "immutable": "^3.8.2",
+    "moment": "^2.20.1",
+    "react": "^16.2.0",
+    "react-async-script": "^0.9.1",
+    "react-block-ui": "^1.1.1",
+    "react-bootstrap": "^0.32.0",
+    "react-datepicker": "^1.0.4",
+    "react-dom": "^16.2.0",
+    "react-google-maps": "^9.4.5",
+    "react-google-recaptcha": "^0.9.9",
+    "react-input-mask": "^1.1.2",
+    "react-number-format": "^3.1.4",
+    "react-popper": "^0.9.2",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.0",
+    "reactstrap": "^5.0.0-beta.3",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "safe-fetch": "^0.2.1",
+    "sweetalert": "^2.1.0"
+  },
+  "scripts": {
+    "build:tmax": "./react-run.sh build dotenv_config_path=test.env",
+    "build:dev": "./react-run.sh build dotenv_config_path=dev.env",
+    "build": "./react-run.sh build dotenv_config_path=prod.env",
+    "postbuild": "rm build/static/js/*.map",
+    "run:prod": "./react-run.sh start dotenv_config_path=prod.env",
+    "start": "./react-run.sh start dotenv_config_path=local.env",
+    "test": "./react-run.sh start dotenv_config_path=test.env"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "redux-immutable-state-invariant": "^2.1.0"
+  },
+  "proxy": "http://localhost:8081/"
+}

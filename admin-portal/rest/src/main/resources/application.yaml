@@ -1,0 +1,67 @@
+server:
+  context-path: /srs-admin-api
+  port: 8082
+  session:
+    timeout: 900  # in seconds
+    cookie:
+      max-age: 900 # in seconds
+
+srs:
+  version: @admin.srs.version@
+
+spring:
+# Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly.
+  http:
+    encoding:
+      # Enable http encoding support.
+      charset: UTF-8
+      # Force the encoding to the configured charset on HTTP requests and responses.
+      force: true
+      enabled: true
+      force-request: true
+  main:
+    web-environment: true
+  mail:
+    host: @mail.host@
+    port: @mail.port@
+    username: @mail.username@
+    password: @mail.password@
+    properties:
+      mail.smtp.auth: @mail.smtp.auth@
+      mail.smtp.starttls.enable: @mail.smtp.starttls.enable@
+    test-connection: false
+  jpa:
+    hibernate:
+      ddl-auto: @main.db.jpa.mode@
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate.type: trace
+      hibernate.jdbc.time_zone: America/Puerto_Rico
+#      hibernate.default_schema: PRDE_SRS
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: @main.db.jdbc.url@
+    username: @main.db.user@
+    password: @main.db.password@
+    driver-class-name: @main.db.driver.name@
+    hikari:
+      maximum-pool-size: 30
+    platform: @main.db.platform@
+  jmx:
+    default-domain: @war.name@-${srs.version}
+
+security:
+  basic:
+    enabled: true
+
+website:
+  url: @website.base.url@
+  context-path: @website.admin.base.context-path@
+logging:
+  config: classpath:logback.xml
+
+property:
+  load:
+    test: Working
+

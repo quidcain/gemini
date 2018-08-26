@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="libs/fontawesome/css/fontawesome-all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="libs/tether/css/tether.min.css">
+  <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css">
+  <link href="css/styles.css" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <title>Educational</title>
+</head>
+<body onload="auth();" class="entry">
+
+<div class="container-fluid profile entrollment">
+  <div class="row content">
+    <div class="col-md-1 navigation-section violet d-flex align-items-center" onclick="window.open('q-found.html', '_self')">
+      <i class="icon-arrow mirror"></i>
+    </div>
+    <div class="col-md-7 content-section">
+      <div class="title h100">
+        <div class="description mb30"><h2>Pre-Enrollment <span>Record search</span></h2></div>
+        <p class="f30slg">Let’s try to find the school in the system. Please provide us with the <span class="f30slb">information below.</span></p>
+        <form id="entrollment-form" action="profile.html" method="POST" class="mt50">
+        <div id="search-school" action="#" method="POST">
+          <div class="group form-group has-feedback border">
+            <input class="inputMaterial fb" type="text" name="school" placeholder="School" required>
+            <i class="s icon-search"></i>
+            <i class="icon-load"></i>
+            <div class="search-result"></div>
+            <div class="search-result-more"><span class="more">View more Schools</span></div>
+            <div class="search-empty">
+              <img class="search-guy" src="img/search-guy.png" alt="">
+              <img class="pot" src="img/pot.png" alt="">
+              <div class="row">
+                <div class="col-md-12 text-center"><p>No school has been found with the information provided.</p></div>
+                <div class="col-md-12 text-center"><a class="button-white" onclick="window.open('enrollment.html', '_self')"><span>n</span>Create new Record</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" value='' name="id">
+        <input type="hidden" value='' name="adress">
+        <input type="hidden" value='' name="level">
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4 illustration-section d-flex align-items-center text-center">
+      <div class="illustration"><img src="img/entrollment-illustration.png" alt=""></div>
+    </div>
+  </div>
+  <div class="row footer d-flex align-items-center">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+      <span>© 2018 All Rights Reserved</span>
+    </div>
+  </div>
+</div>
+
+</body>
+<script src="libs/jquery/jquery-3.3.1.min.js"></script>
+<script src="libs/bootstrap/js/popper.min.js"></script>
+<script src="libs/tether/js/tether.min.js"></script>
+<script src="libs/bootstrap/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap/js/bootstrapValidator.min.js"></script>
+<script src="libs/main/scripts.js"></script>
+</html>

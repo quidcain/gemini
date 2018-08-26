@@ -1,0 +1,30 @@
+spring:
+  main:
+    web-environment: false
+  thymeleaf:
+    enabled: false #disabled MVC
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate.type: trace
+      hibernate.jdbc.time_zone: America/Puerto_Rico
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM
+    username: PRDE_SRS
+    password: pr234Srs987
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    platform: oracle
+
+  mail:
+    host: @mail.host@
+    port: @mail.port@
+    username: @mail.username@
+    password: @mail.password@
+    properties:
+      mail.smtp.auth: @mail.smtp.auth@
+      mail.smtp.starttls.enable: @mail.smtp.starttls.enable@
+    test-connection: false

@@ -1,0 +1,23 @@
+.dashboard .navbar-default {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dashboard .navbar-default .navbar-header {
+    display: flex;
+    align-items: center;
+}
+
+.dashboard .navbar-default .navbar-nav .userlogo {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
+
+.dashboard .navbar-default .navbar-nav .dropdown .dropdown-menu {
+    padding-left: 15px;
+    position: absolute;
+    left: -25px;
+    width: 40px;
+    min-width: 8rem;
+}

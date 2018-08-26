@@ -1,0 +1,10 @@
+module.exports =  [{ name:  'Grados 1-3', description: 'Grados 1-3', value: 'G1-3', orderBy: '1'},
+{ name:  'Grados 4-6', description: 'Grados 4-6', value: 'G4-6', orderBy: '2'},
+{ name:  'Grados 7-9', description: 'Grados 7-9', value: 'G7-9', orderBy: '3'},
+{ name:  'Grados 10-12', description: 'Grados 10-12', value: 'G-12', orderBy: '4'},
+{ name:  'Vocacional', description: 'Vocacional', value: 'VOCL', orderBy: '5'},
+{ name:  'Curso Técnico', description: 'Curso Técnico', value: 'CRTC', orderBy: '6'},
+{ name:  'Grado Asociado', description: 'Grado Asociado', value: 'GRAS', orderBy: '7'},
+{ name:  'Bachillerato', description: 'Bachillerato', value: 'BACH', orderBy: '8'},
+{ name:  'Maestría', description: 'Maestría', value: 'MAES', orderBy: '9'},
+{ name:  'Doctorado', description: 'Doctorado', value: 'DOCT', orderBy: '10'}];

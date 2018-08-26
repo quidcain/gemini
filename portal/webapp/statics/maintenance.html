@@ -1,0 +1,135 @@
+<html>
+<title>SIE-Registro</title>
+<head>
+    <style>
+        body.unsupported {
+            /*background: #f2f2f3;*/
+            width: 100%;
+
+            margin: 0;
+            padding: 0;
+            background-color: #f5fcfd;
+            font-family: 'SF Pro Display', tahoma;
+            font-weight: normal;
+            font-size: 18px;
+            color: #383c4b;
+        }
+
+        .unsupported .container {
+            width: 100%;
+            min-width: 300px;
+        }
+
+        .unsupported-browser {
+            background: #fff;
+            margin: 35px auto;
+            width: 100%;
+            box-shadow: 0 0 5px #cacace;
+            position: relative;
+            padding: 20px 30px;
+            text-align: left;
+        }
+
+        .unsupported-browser h1 {
+            font-size: 2em;
+            font-weight: 0;
+        }
+
+        .unsupported-browser h2 {
+            border: 0;
+        }
+
+        .unsupported-browser li {
+            margin-bottom: 5px;
+        }
+
+        .unsupported-browser li a {
+            color: inherit;
+        }
+
+        .unsupported-browser li a:hover {
+            color: #007bc3;
+        }
+
+        .unsupported hr {
+            margin-top: 50px;
+        }
+
+        .unsupported-message {
+            font-size: 0.9em;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .unsupported-message li {
+            margin-bottom: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="/registro-statics/css/flipclock.css">
+</head>
+<body class="unsupported">
+<div class="grid-tools FullSite">
+    <div class="container">
+        <div class="container-wrapper">
+            <div class="container-full-column">
+                <div class="unsupported-browser">
+
+                    <h1 align="center">Gracias por tu interes, regresa el 20-abril-2018</h1>
+                    <h1 align="center">para confirmar tu matr&iacute;cula 2018-2019</h1>
+
+                    <div class="clock" style="width: 50%;  margin: auto;  display: block;"></div>
+                    <div class="message"></div>
+
+                    <!--<div class="countdown" id="new" style="width: 50%;  margin: auto;  display: block;"></div>-->
+
+                    <iframe width="560" height="315" style="width: 50%;  margin: auto;  display: block;" src="https://www.youtube.com/embed/Idp4MCfsegE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                        
+                    </iframe>
+                    <hr>
+                    <img style="width: 50%;  margin: auto;  display: block;" src="/registro-statics/img/registration-illustration.png"/>
+                    <!--<div class="unsupported-message">-->
+                        <!--<h3>No puedo actualizar mi navegador</h3>-->
+                        <!--<ul>-->
+                            <!--<li>Ask your system administrator to update your browser if you cannot install updates-->
+                                <!--yourself.-->
+                            <!--</li>-->
+                            <!--<li>If you can't change your browser because of compatibility issues, think about installing-->
+                                <!--a second browser for utilization of this site and keep the old one for compatibility.-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/registro-statics/js/jquery.min.js"></script>
+<script src="/registro-statics/js/flipclock.min.js"></script>
+<script src="/registro-statics/js/jquery.countdown.min.js"></script>
+<script type="text/javascript">
+    let clock;
+    $(document).ready(function() {
+        // Grab the current date
+        var currentDate = new Date();
+        // Set some date in the future. In this case, it's always Jan 1
+        var futureDate  = new Date(2018, 3, 19, 18, 0, 0);
+        // Calculate the difference in seconds between the future and current date
+        var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+        var clock;
+        clock = $('.clock').FlipClock(diff, {
+            clockFace: 'DailyCounter',
+            autoStart: true,
+            countdown: true,
+            language: 'es',
+            // showSeconds: false,
+            callbacks: {
+                stop: function() {
+                    $('.message').html('The clock has stopped!')
+                }
+            }
+        });
+
+    });
+</script>
+</html>
