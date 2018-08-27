@@ -63,6 +63,10 @@ public class SchoolmaxService {
         return smaxDao.findRecentStudentEnrollment(studentId);
     }
 
+    public EnrollmentInfo findSIEStudentEnrollment(Long studentId) {
+        return smaxDao.findSIEStudentEnrollment(studentId);
+    }
+
     public School findSchoolById(Long schoolId) {
         return smaxDao.findSchoolById(schoolId);
     }
@@ -151,16 +155,19 @@ public class SchoolmaxService {
         return smaxDao.getVocationalPrograms(schoolId, schoolYear);
     }
 
-    public boolean foundStudentBySsn(String ssn){
+    public boolean foundStudentBySsn(String ssn) {
         return smaxDao.foundStudentBySsn(ssn);
     }
 
-    public boolean schoolInExclusionList(Long schoolId){
+    public boolean schoolInExclusionList(Long schoolId) {
         return smaxDao.schoolInExclusionList(schoolId);
     }
 
-    public boolean schoolInMontesorri(Long schoolId){
+    public boolean schoolInMontesorri(Long schoolId) {
         return smaxDao.schoolInMontesorri(schoolId);
     }
 
+    public List<StudentScheduleView> getStudentScheduleView(Long studentId){
+        return smaxDao.getStudentScheduleView(studentId);
+    }
 }

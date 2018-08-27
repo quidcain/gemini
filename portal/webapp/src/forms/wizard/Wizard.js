@@ -35,6 +35,10 @@ import PreEnrollmentSpecializedSchoolsSelections from "./pre-enrollment/PreEnrol
 import ReasonForNotAttendingPreSelectedSchool from "./pre-enrollment/ReasonForNotAttendingPreSelectedSchool";
 import PreEnrollmentTechnicalSchoolsSelection from "./pre-enrollment/PreEnrollmentTechnicalSchoolsSelection";
 import EndPreEnrollmentMoveOutOfCountry from "./pre-enrollment/EndPreEnrollmentMoveOutOfCountry";
+
+//current enrollment from SIE
+import EnrollmentLocationInfo from "./enrollment/EnrollementLocationInfo";
+
 import * as UIHelper from "../../UIHelper";
 import * as Utils from "../../Utils";
 import {UncontrolledTooltip} from "reactstrap";
@@ -166,6 +170,9 @@ class Wizard extends Component {
             , {renderObj: VocationalSchoolSelectionInfo}
             , {renderObj: VocationalProgramsSelection}
             , {renderObj: VocationalReviewSubmit}
+
+            // After school
+            , {renderObj: EnrollmentLocationInfo}
 
         ];
 

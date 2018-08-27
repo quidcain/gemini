@@ -101,6 +101,7 @@ export let catalog = [
         //occupational
         nextOccupationalOnNotFoundWhenEmptySelectionPreEnrollment: "VOCATIONAL_SCHOOL_SELECTION",
         nextOccupationalOnNotFoundPreEnrollment: "VOCATIONAL_REVIEW_SUBMIT",
+        nextShowEnrollmentLocation: "END_ENROLLMENT_LOCATION",
         //technical not used this page
         footerType: QUESTION,
     }, {
@@ -164,4 +165,6 @@ export let catalog = [
         editSchoolHop: "VOCATIONAL_PROGRAMS",
         isQuestion: true
     }
+
+    , {type: "END_ENROLLMENT_LOCATION", footerType: CONTINUE}
 ];

@@ -1,19 +1,18 @@
 import React, {Component} from "react";
 import * as store from "../../../setup/store";
-import RemoteCodeSelect from "../../../components/RemoteCodeSelect";
 import AdminSchoolSelector from "../../../components/AdminSchoolSelector";
 import * as Utils from "../../../Utils";
 import {Bar, Pie, Polar, HorizontalBar, Chart} from 'react-chartjs-2';
-import {Button} from "react-bootstrap";
+import {Button, Nav, NavItem, TabContent, TabPane} from "react-bootstrap";
 import ReportSelectorModal from "./ReportSelectorModal";
 import chartLabels from "chart.piecelabel.js";
 
 const analysis = [
     // {code: 'REGULAR', description: 'Maestro Regulares'},
-    {code: 'REGULAR_AFTER_PLACEMENT', description: 'Maestro Regulares'},
+    {code: 'REGULAR_AFTER_PLACEMENT', description: 'Maestros'},
     // {code: 'SPECIAL_EDUCATION', description: 'Maestro de Educacion Especial '},
-    {code: 'SPECIAL_EDUCATION_AFTER_PLACEMENT', description: 'Maestro de Educacion Especial'},
-    {code: 'OCCUPATIONAL_PLACEMENT', description: 'Maestro de Ocupacional'}
+    // {code: 'SPECIAL_EDUCATION_AFTER_PLACEMENT', description: 'Maestro de Educacion Especial'},
+    // {code: 'OCCUPATIONAL_PLACEMENT', description: 'Maestro de Ocupacional'}
 
 ];
 
@@ -152,7 +151,8 @@ export default class SchedulingDashboard extends Component {
                 backgroundColor: []
             },
             vacantAvailableRaw: {},
-            detailTitleDescription: "Todas"
+            detailTitleDescription: "Todas",
+            activeTab: 1
         };
         this.analysisChanged = this.analysisChanged.bind(this);
         this.exportReport = this.exportReport.bind(this);
@@ -263,43 +263,45 @@ export default class SchedulingDashboard extends Component {
                 cityCode: null,
                 schoolId: null
             };
-            store.services()
-                .retrieveSchedulingSummary(criteriaObj)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.setState({
-                        ...this.state,
-                        cancelSelectorAction: false,
-                        dataChanged: true,
-                        summary: data
-                    }, () => {
-                        this.setState({...this.state, dataChanged: false});
+            /*
+                store.services()
+                    .retrieveSchedulingSummary(criteriaObj)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        this.setState({
+                            ...this.state,
+                            cancelSelectorAction: false,
+                            dataChanged: true,
+                            summary: data
+                        }, () => {
+                            this.setState({...this.state, dataChanged: false});
 
-                        let criteriaCategoryObj = {
-                            analysisType: obj.code,
-                            selectedType: -1,
-                            regionId: null,
-                            cityCode: null,
-                            city: null,
-                            schoolId: null
-                        };
-                        store.services()
-                            .retrieveSchedulingCategories(criteriaCategoryObj)
-                            .then((response) => response.json())
-                            .then((data) => {
-                                let categories = {
-                                    labels: data.labels || [],
-                                    categoryTotals: data.categoryTotals || [],
-                                    backgroundColor: getColors((data.labels || []))
-                                };
-                                this.setState({
-                                    ...this.state,
-                                    categories: categories,
-                                    detailTitleDescription: this.getText(-1)
+                            let criteriaCategoryObj = {
+                                analysisType: obj.code,
+                                selectedType: -1,
+                                regionId: null,
+                                cityCode: null,
+                                city: null,
+                                schoolId: null
+                            };
+                            store.services()
+                                .retrieveSchedulingCategories(criteriaCategoryObj)
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    let categories = {
+                                        labels: data.labels || [],
+                                        categoryTotals: data.categoryTotals || [],
+                                        backgroundColor: getColors((data.labels || []))
+                                    };
+                                    this.setState({
+                                        ...this.state,
+                                        categories: categories,
+                                        detailTitleDescription: this.getText(-1)
+                                    });
                                 });
-                            });
+                        });
                     });
-                });
+            */
         });
     }
 
@@ -323,7 +325,7 @@ export default class SchedulingDashboard extends Component {
             cityCode: this.refs.selector.getCityCode(),
             schoolId: this.refs.selector.getSchoolId(),
         };
-
+        /*
         store.services()
             .retrieveSchedulingSummary(criteriaObj)
             .then((response) => response.json())
@@ -331,39 +333,78 @@ export default class SchedulingDashboard extends Component {
                 this.setState({...this.state, dataChanged: true, summary: data}, () => {
                     this.setState({...this.state, dataChanged: false});
 
-                    let criteriaCategoryObj = {
-                        analysisType: this.state.selectedAnalysis,
-                        selectedType: -1,
-                        regionId: this.refs.selector.getRegionId(),
-                        cityCode: this.refs.selector.getCityCode(),
-                        schoolId: this.refs.selector.getSchoolId(),
-                        city: null,
-                    };
-                    store.services()
-                        .retrieveSchedulingCategories(criteriaCategoryObj)
-                        .then((response) => response.json())
-                        .then((data) => {
-                            let categories = {
-                                labels: data.labels || [],
-                                categoryTotals: data.categoryTotals || [],
-                                backgroundColor: getColors((data.labels || []))
-                            };
-                            this.setState({
-                                ...this.state,
-                                categories: categories,
-                                detailTitleDescription: this.getText(-1)
-                            });
 
-                            if (this.state.chartType === "vacantAvailable")
-                                this.toggleVacantAvailable()
-                        });
+                        let criteriaCategoryObj = {
+                            analysisType: this.state.selectedAnalysis,
+                            selectedType: -1,
+                            regionId: this.refs.selector.getRegionId(),
+                            cityCode: this.refs.selector.getCityCode(),
+                            schoolId: this.refs.selector.getSchoolId(),
+                            city: null,
+                        };
+
+                        store.services()
+                            .retrieveSchedulingCategories(criteriaCategoryObj)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                let categories = {
+                                    labels: data.labels || [],
+                                    categoryTotals: data.categoryTotals || [],
+                                    backgroundColor: getColors((data.labels || []))
+                                };
+                                this.setState({
+                                    ...this.state,
+                                    categories: categories,
+                                    detailTitleDescription: this.getText(-1)
+                                });
+
+                                // if (this.state.chartType === "vacantAvailable")
+                                //     this.toggleVacantAvailable()
+                            });
 
                 });
             });
+             */
 
     }
 
     render() {
+
+        return [
+            /*<div className="row">
+                <div className="col-md-12">
+                    <RemoteCodeSelect id="gradeLevel"
+                                      label="Analisis"
+                                      placeholder="Seleccione analisis"
+                                      codes={analysis}
+                                      onObjectChange={this.analysisChanged}
+                                      target="code"
+                                      display="description"
+                                      value={this.state.selectedAnalysis}/>
+                </div>
+            </div>,*/
+            <div className="row">
+                <div className="col-md-12">
+                    <h3>Dashboard de Recurso Humanos</h3>
+                </div>
+            </div>,
+
+            <div className="row">
+                <div className="col-md-10">
+                    <AdminSchoolSelector ref="selector" callback={this.selectorChanged}/>
+                </div>
+                <div className="col-md-2">
+                    <button className="button-green" style={{paddingLeft: 10}} onClick={this.exportReport}>
+                        Exportar
+                    </button>
+                </div>
+
+                <ReportSelectorModal ref="reportModal"/>
+            </div>
+        ];
+    }
+
+    renderGraph() {
         let summaryObj = this.state.summary;
         let categories = this.state.categories;
         let vacantAvailable = this.state.vacantAvailable;
@@ -487,43 +528,21 @@ export default class SchedulingDashboard extends Component {
             datasets: datasetsArray
         };
 
-        return [
-            <div className="row">
-                <div className="col-md-12">
-                    <RemoteCodeSelect id="gradeLevel"
-                                      label="Analisis"
-                                      placeholder="Seleccione analisis"
-                                      codes={analysis}
-                                      onObjectChange={this.analysisChanged}
-                                      target="code"
-                                      display="description"
-                                      value={this.state.selectedAnalysis}/>
-                </div>
-            </div>,
-            <div className="row">
-                <div className="col-md-10">
-                    <AdminSchoolSelector ref="selector" callback={this.selectorChanged}/>
-                </div>
-                <div className="col-md-2">
-                    <button className="button-green" style={{paddingLeft: 10}} onClick={this.exportReport}>
-                        Exportar
-                    </button>
-                </div>
-            </div>,
-            <div className="row">
-                <div className="col-md-3"/>
-                <div className="col-md-6">
-                    <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
-                            onClick={this.toggleStaffOverview}>Staff Overview</Button>
-                    <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
-                            onClick={this.toggleFullyStaffed}>Fully Staffed</Button>
-                    <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
-                            onClick={this.toggleTotalNeededStaff}>Total Needed</Button>
-                    <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
-                            onClick={this.toggleVacantAvailable}>Vacant Categories</Button>
-                </div>
-                <div className="col-md-3"/>
-            </div>,
+        return
+        [<div className="row">
+            <div className="col-md-3"/>
+            <div className="col-md-6">
+                <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
+                        onClick={this.toggleStaffOverview}>Staff Overview</Button>
+                <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
+                        onClick={this.toggleFullyStaffed}>Fully Staffed</Button>
+                <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
+                        onClick={this.toggleTotalNeededStaff}>Total Needed</Button>
+                <Button color="secondary" size="sm" style={{height: 40, paddingTop: 10}}
+                        onClick={this.toggleVacantAvailable}>Vacant Categories</Button>
+            </div>
+            <div className="col-md-3"/>
+        </div>,
             <div className="row" style={{paddingTop: 10}}>
                 <div
                     className={this.state.chartType === "totalNeeded" || this.state.chartType === "vacantAvailable" ? "col-md-12" : "col-md-6"}>
@@ -543,9 +562,7 @@ export default class SchedulingDashboard extends Component {
 
                     </div>)}
 
-                <ReportSelectorModal ref="reportModal"/>
-            </div>
-        ];
+            </div>];
     }
 
     clickEvent(elems) {

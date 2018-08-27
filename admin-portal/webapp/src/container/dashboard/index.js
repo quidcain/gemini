@@ -18,6 +18,8 @@ import EditSchoolMaxCapacity from "./caps/manage/EditSchoolMaxCapacity";
 import ApprovalsEntryPoint from "./approvals";
 import EditStudentRequestEnrolled from "./approvals/manage/EditStudentRequestEnrolled";
 import SchedulingDashboard from "./scheduling";
+import StaffReports from "./staff";
+import B2SReports from "./b2s";
 
 class Dashboard extends Component {
 
@@ -121,14 +123,25 @@ class Dashboard extends Component {
                                                     Inicio
                                                 </Link>
                                             </li>
+
+                                            <li className="nav-item">
+                                                <Link onClick={this.selectLink(counter)}
+                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
+                                                      href='#mainchart'
+                                                      to='/dashboard/staff/reports'>
+                                                    Enrollment and Staffing Summary
+                                                </Link>
+                                            </li>
+
                                             <li className="nav-item">
                                                 <Link onClick={this.selectLink(counter)}
                                                       className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
                                                       href='#mainchart'
                                                       to='/dashboard/school/capacity/manage'>
-                                                    Validaci&oacute;n de Cupo
+                                                    Espacios Disponibles para Estudiantes por Grado
                                                 </Link>
                                             </li>
+
                                             {
                                                 (isSIEUser || isPlanificacionUser || isRegionalUser) ?
                                                     (
@@ -166,7 +179,7 @@ class Dashboard extends Component {
                                             }
 
                                             {
-                                                isSIEUser || isSAPDEUser || isRHUser || isRegionalUser ?
+                                                isSIEUser || isSAPDEUser || isRHUser || isRegionalUser || isDirectorUser ?
                                                     (<li className="nav-item">
                                                         <Link onClick={this.selectLink(counter)}
                                                               className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
@@ -176,6 +189,14 @@ class Dashboard extends Component {
                                                         </Link></li>)
                                                     : (null)
                                             }
+
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#mainchart'*/}
+                                                      {/*to='/dashboard/b2s/reports/'>*/}
+                                                    {/*Reportes Back to School*/}
+                                                {/*</Link></li>*/}
                                         </ul>
                                     </Collapse>
                                     <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 ">
@@ -201,38 +222,38 @@ class Dashboard extends Component {
                                                     : (null)
                                             }
 
-                                            <li className="nav-item">
-                                                <Link onClick={this.selectLink(counter)}
-                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
-                                                      href='#reports'
-                                                      to='/dashboard/report/confirmed'>
-                                                    Estudiantes Confirmados
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item">
-                                                <Link onClick={this.selectLink(counter)}
-                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
-                                                      href='#reports'
-                                                      to='/dashboard/report/denied'>
-                                                    Estudiantes Rechazados
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item">
-                                                <Link onClick={this.selectLink(counter)}
-                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
-                                                      href='#reports'
-                                                      to='/dashboard/report/alternate_enrollment'>
-                                                    Estudiantes con matricula alterna
-                                                </Link>
-                                            </li>
-                                            <li className="nav-item">
-                                                <Link onClick={this.selectLink(counter)}
-                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
-                                                      href='#reports'
-                                                      to='/dashboard/report/pending_enrollment'>
-                                                    Estudiantes pendientes por matricular
-                                                </Link>
-                                            </li>
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#reports'*/}
+                                                      {/*to='/dashboard/report/confirmed'>*/}
+                                                    {/*Estudiantes Confirmados*/}
+                                                {/*</Link>*/}
+                                            {/*</li>*/}
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#reports'*/}
+                                                      {/*to='/dashboard/report/denied'>*/}
+                                                    {/*Estudiantes Rechazados*/}
+                                                {/*</Link>*/}
+                                            {/*</li>*/}
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#reports'*/}
+                                                      {/*to='/dashboard/report/alternate_enrollment'>*/}
+                                                    {/*Estudiantes con matricula alterna*/}
+                                                {/*</Link>*/}
+                                            {/*</li>*/}
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#reports'*/}
+                                                      {/*to='/dashboard/report/pending_enrollment'>*/}
+                                                    {/*Estudiantes pendientes por matricular*/}
+                                                {/*</Link>*/}
+                                            {/*</li>*/}
                                             <li className="nav-item">
                                                 <Link onClick={this.selectLink(counter)}
                                                       className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
@@ -241,14 +262,14 @@ class Dashboard extends Component {
                                                     Estudiantes Nuevo Ingresos
                                                 </Link>
                                             </li>
-                                            <li className="nav-item">
-                                                <Link onClick={this.selectLink(counter)}
-                                                      className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}
-                                                      href='#reports'
-                                                      to='/dashboard/report/vocational_enrollment'>
-                                                    Estudiantes Ocupacionales
-                                                </Link>
-                                            </li>
+                                            {/*<li className="nav-item">*/}
+                                                {/*<Link onClick={this.selectLink(counter)}*/}
+                                                      {/*className={`nav-link ${activeIndex === counter++ ? "active" : ""}`}*/}
+                                                      {/*href='#reports'*/}
+                                                      {/*to='/dashboard/report/vocational_enrollment'>*/}
+                                                    {/*Estudiantes Ocupacionales*/}
+                                                {/*</Link>*/}
+                                            {/*</li>*/}
                                         </ul>
                                     </Collapse>
                                 </div>
@@ -308,6 +329,15 @@ class Dashboard extends Component {
                             <Route
                                 path="/dashboard/scheduling/"
                                 component={SchedulingDashboard}/>
+                            <Route
+                                path="/dashboard/staff/reports"
+                                component={StaffReports}
+                            />
+                            <Route
+                                path="/dashboard/b2s/reports"
+                                component={B2SReports}
+                            />
+
                         </Switch>
                     </div>
                 </div>

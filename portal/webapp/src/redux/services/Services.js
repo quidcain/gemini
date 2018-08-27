@@ -221,6 +221,9 @@ export default class Services {
         return this._getRaw(`/address/helper/retrieve/county/code/${zipcode}`);
     }
 
+    loadStudentSchedule(studentId) {
+        return this._get(`/student/${studentId}/schedule/view`);
+    }
 
     _login(path, credentials) {
         let authorization = `Basic ${btoa(credentials.username + ':' + credentials.password)}`;

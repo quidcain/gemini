@@ -1,6 +1,8 @@
 package com.gemini.controllers;
 
+import com.gemini.beans.forms.StudentScheduleForm;
 import com.gemini.beans.requests.StudentAnswerAgreementRequest;
+import com.gemini.commons.beans.forms.EnumCode;
 import com.gemini.commons.beans.forms.StudentDemographicsBean;
 import com.gemini.beans.requests.StudentAnswerRequest;
 import com.gemini.beans.requests.StudentDemographicsRequest;
@@ -14,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -120,5 +123,9 @@ public class StudentController {
         return ResponseEntity.ok(ResponseBase.error(messageHelper.generalError()));
     }
 
+    @RequestMapping(value = "/{studentId}/schedule/view")
+    public ResponseEntity<List<StudentScheduleForm>> retrieveScheduleView(@PathVariable Long studentId){
+        return ResponseEntity.ok(studentService.getStudentScheduleView(studentId));
+    }
 
 }

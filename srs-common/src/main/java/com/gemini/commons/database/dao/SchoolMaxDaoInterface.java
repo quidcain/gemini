@@ -26,6 +26,8 @@ public interface SchoolMaxDaoInterface {
 
     EnrollmentInfo findRecentStudentEnrollment(Long studentId);
 
+    EnrollmentInfo findSIEStudentEnrollment(Long studentId);
+
     //regular schools
     List<School> findSchoolsByRegionAndGradeLevel(Long regionId, Long schoolYear, String gradeLevel);
 
@@ -57,5 +59,6 @@ public interface SchoolMaxDaoInterface {
 
     boolean schoolInMontesorri(Long schoolId);
 
+    List<StudentScheduleView> getStudentScheduleView(Long studentId);
 
 }

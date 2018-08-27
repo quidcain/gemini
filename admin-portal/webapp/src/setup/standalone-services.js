@@ -90,6 +90,26 @@ export default class Services {
         return this._post(`/report/scheduling/excedentes`, criteria);
     }
 
+    retrieveRoster(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/detailed/roster`, criteria);
+    }
+
+    retrieveSchoolRoster(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/school/roster`, criteria);
+    }
+
+    retrieveClassGroupUnassigned(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/class/group/unassigned/teacher`, criteria);
+    }
+
+    retrieveStudentAddressSummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/student/address/summary`, criteria);
+    }
+
 
     //manage pre-enrollments
     doRequestSearch(criteria) {
@@ -130,7 +150,8 @@ export default class Services {
 
     //manage school caps
     doSchoolCapsSearch(criteria) {
-        return this._get(`/school/caps/manage/search/${criteria.schoolId}`);
+        toggleBlockVariable(true);
+        return this._post(`/school/caps/manage/search`, criteria);
     }
 
     getEditSchoolCap(schoolGradeLimitId) {
@@ -180,12 +201,37 @@ export default class Services {
         return this._post(`/dashboard/scheduling/retrieve/categories`, criteria);
     }
 
+    //staff report
+    retrieveStaffRegionSummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/staff/region/summary`, criteria);
+    }
+
+    retrieveStaffCitySummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/staff/city/summary`, criteria);
+    }
+
+    retrieveStaffSchoolSummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/staff/school/summary`, criteria);
+    }
+
+    retrieveEnrollmentStaffingSummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/staff/enrollment/staffing/summary`, criteria);
+    }
+
+    retrieveVacantSummary(criteria) {
+        toggleBlockVariable(true);
+        return this._post(`/report/staff/city/vacant/staffing/summary`, criteria);
+    }
+
     _login(path, credentials) {
         toggleBlockVariable(true);
         let authorization = `Basic ${btoa(credentials.username + ':' + credentials.password)}`;
         return fetch(buildUrl(path), {method: "POST", ...this._addHeader(authorization), credentials: "same-origin"})
             .then((response) => this._handleHttpCode(response, false))
-
     }
 
     _getPromise(path) {

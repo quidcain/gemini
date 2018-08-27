@@ -1,6 +1,7 @@
 package com.gemini.commons.database.dao;
 
 
+import com.gemini.admin.beans.requests.SchoolLimitSearchRequest;
 import com.gemini.commons.database.beans.SchoolGradeLimit;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface SchoolCapDao {
 
-    List<SchoolGradeLimit> getLimitBySchool(Long schoolId);
+    List<SchoolGradeLimit> getLimitBySchool(SchoolLimitSearchRequest request);
 
     SchoolGradeLimit getLimitBySchoolAndGradeLevel(Long schoolId, String gradeLevel);
 

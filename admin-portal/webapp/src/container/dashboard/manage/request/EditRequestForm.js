@@ -65,7 +65,7 @@ export default class EditRequestForm extends Component {
         return [
             <div className="row">
                 <div className="col-md-12">
-                    <h3>Editar Solicitud</h3>
+                    <h3>Detalles de matricula</h3>
                 </div>
             </div>,
             <div className="row" style={{backgroundColor: "white", padding: 40}}>
@@ -147,20 +147,20 @@ export default class EditRequestForm extends Component {
                     </div>
 
 
-                    <div className="row" style={{padding: 10}}>
-                        <div className="col-md-3">
-                            <span>Tipo de matrícula:</span>
-                        </div>
-                        <div className="col-md-3">
-                            <RemoteCodeSelect id="enrollmentType"
-                                              onObjectChange={this.enrollmentTypeChanged}
-                                              codes={enrollmentTypes}
-                                              target="type"
-                                              display="description"
-                                              value={request.type}/>
-                        </div>
-                        <div className="col-md-6"/>
-                    </div>
+                    {/*<div className="row" style={{padding: 10}}>*/}
+                        {/*<div className="col-md-3">*/}
+                            {/*<span>Tipo de matrícula:</span>*/}
+                        {/*</div>*/}
+                        {/*<div className="col-md-3">*/}
+                            {/*<RemoteCodeSelect id="enrollmentType"*/}
+                                              {/*onObjectChange={this.enrollmentTypeChanged}*/}
+                                              {/*codes={enrollmentTypes}*/}
+                                              {/*target="type"*/}
+                                              {/*display="description"*/}
+                                              {/*value={request.type}/>*/}
+                        {/*</div>*/}
+                        {/*<div className="col-md-6"/>*/}
+                    {/*</div>*/}
                     <div className="row" style={{padding: 10}}>
                         <div className="col-md-3">
                             Cuenta como:

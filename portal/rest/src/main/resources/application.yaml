@@ -66,7 +66,6 @@ property:
   load:
     test: Working
 
-
 google:
   recaptcha:
     secret: @google.recaptcha.secret.key@
@@ -133,7 +132,7 @@ messages:
     regular.validation: "Dos opciones de escuelas son requeridas"
     occupational.school.validation: "Debe seleccionar una escuela"
     occupational.program.validation: "Debe seleccionar al menos un programa"
-    error: "Ha occurrido un error guardando su matrícula"
+    error: "Ha occurrido un error"
     student.max.age.validation: "Estudiante posse más de 23 años"
     student.dob.future.date: "Fecha de naciemiento en Futuro"
     already.ssn.sie: "No puede utilizar ese Seguro Social"

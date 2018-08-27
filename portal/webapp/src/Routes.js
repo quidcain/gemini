@@ -22,6 +22,7 @@ import registrationIllustration from "./assets/img/registration-illustration.png
 import FAQ from "./FAQ";
 import DisableMessage from "./DisableMessage";
 import AddressForm from "./forms/wizard/pre-enrollment/AddressForm";
+import StudentScheduleView from "./forms/wizard/enrollment/StudentScheduleView";
 
 class Routes extends Component {
 
@@ -59,6 +60,7 @@ class Routes extends Component {
 
 
                 {/*privates routes*/}
+                <PrivateRoute path="/schedule/:id" component={StudentScheduleView} authenticated={authenticated} loading={loading}/>
                 <PrivateRoute path="/home" component={Home} authenticated={authenticated} loading={loading}/>
                 <PrivateRoute path="/wizard/:id?" component={Wizard} authenticated={authenticated} loading={loading}/>
                 <PrivateRoute path="/edit/address/:id" component={AddressForm} authenticated={authenticated} loading={loading}/>

@@ -39,6 +39,8 @@ public class SchoolMaxDaoImpl extends NamedParameterJdbcDaoSupport implements Sc
     private final String STUDENT_ADDRESS_SQL = "SELECT * FROM VW_STUDENT_ADDRESS ";
     private final String REGION_SQL = "SELECT * FROM VW_REGIONS ";
     private final String ENROLLMENT_SQL = "SELECT * FROM VW_SIE_NYE_STUDENT_ENROLLMENT ";
+    private final String SIE_ENROLLMENT_SQL = "SELECT * FROM VW_SIE_ENROLLMENT ";
+
     private final String SCHOOL_SQL = "SELECT * FROM VW_SCHOOLS S ";
     private final String VOCATIONAL_SCHOOLS = "SELECT * FROM VW_VOCATIONAL_SCHOOLS S ";
     private final String SPECIALIZED_SCHOOLS = "SELECT * FROM VW_SPECIALIZED_SCHOOLS S ";
@@ -124,6 +126,13 @@ public class SchoolMaxDaoImpl extends NamedParameterJdbcDaoSupport implements Sc
     @Override
     public EnrollmentInfo findRecentStudentEnrollment(Long studentId) {
         String sql = ENROLLMENT_SQL.concat(" WHERE ENROLLMENT_ID = (SELECT MAX(ENROLLMENT_ID) FROM VW_SIE_NYE_STUDENT_ENROLLMENT WHERE STUDENT_ID = ? )");
+        List<EnrollmentInfo> enrollments = getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(EnrollmentInfo.class), studentId);
+        return enrollments.isEmpty() ? null : enrollments.get(0);
+    }
+
+    @Override
+    public EnrollmentInfo findSIEStudentEnrollment(Long studentId) {
+        String sql = SIE_ENROLLMENT_SQL.concat(" WHERE STUDENT_ID = ?");
         List<EnrollmentInfo> enrollments = getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(EnrollmentInfo.class), studentId);
         return enrollments.isEmpty() ? null : enrollments.get(0);
     }
@@ -228,5 +237,12 @@ public class SchoolMaxDaoImpl extends NamedParameterJdbcDaoSupport implements Sc
                 "WHERE RE.SCHOOL_ID = ? ";
         int total = getJdbcTemplate().queryForObject(sql, new SingleColumnRowMapper<>(Integer.class), schoolId);
         return total > 0;
+    }
+
+    @Override
+    public List<StudentScheduleView> getStudentScheduleView(Long studentId) {
+        String sql = "select * from VW_STUDENT_SCHEDULE WHERE STUDENT_ID = ? ";
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(StudentScheduleView.class), studentId);
+
     }
 }

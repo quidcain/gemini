@@ -4,6 +4,7 @@ import com.gemini.admin.beans.AdminUser;
 import com.gemini.admin.beans.forms.EditSchoolGradeLimit;
 import com.gemini.admin.beans.forms.SchoolGradeLimitResult;
 import com.gemini.admin.beans.requests.SchoolGradeLimitEditRequest;
+import com.gemini.admin.beans.requests.SchoolLimitSearchRequest;
 import com.gemini.commons.database.dao.SchoolCapDao;
 import com.gemini.commons.database.beans.SchoolGradeLimit;
 import com.gemini.admin.database.jpa.entities.SchoolGradeLimitEditRequestEntity;
@@ -41,12 +42,9 @@ public class ManageSchoolCapsService {
     @Autowired
     SchoolMaxDaoInterface smaxInterface;
 
-    public List<SchoolGradeLimitResult> getGradeLimitsBySchool(Long schoolId) {
-        if (!ValidationUtils.valid(schoolId)) {
-            return null;
-        }
+    public List<SchoolGradeLimitResult> getGradeLimitsBySchool(SchoolLimitSearchRequest request) {
 
-        List<SchoolGradeLimit> limits = schoolCapDao.getLimitBySchool(schoolId);
+        List<SchoolGradeLimit> limits = schoolCapDao.getLimitBySchool(request);
         List<SchoolGradeLimitResult> results = FluentIterable
                 .from(limits)
                 .transform(new Function<SchoolGradeLimit, SchoolGradeLimitResult>() {
@@ -56,9 +54,12 @@ public class ManageSchoolCapsService {
                         result.setSchoolGradeLimitId(limit.getSchoolGradeLimitId());
                         result.setConfirmedMaxCapacity(limit.getConfirmedMaxCapacity());
                         result.setSchoolId(limit.getSchoolId());
+                        result.setSchoolName(limit.getExtSchoolNumber() + "-" + limit.getSchoolName());
                         result.setGradeLevel(limit.getGradeLevel());
                         result.setGradeLevelDescription(GradeLevelUtils.getDescriptionByGradeLevel(limit.getGradeLevel()));
                         result.setMaxCapacity(limit.getMaxCapacity());
+                        result.setEnrollmentTotal(limit.getEnrollmentTotal());
+                        result.setRemainCap(limit.getRemainCap());
                         return result;
                     }
                 })

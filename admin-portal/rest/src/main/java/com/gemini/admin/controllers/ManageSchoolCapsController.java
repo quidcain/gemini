@@ -5,6 +5,7 @@ import com.gemini.admin.beans.forms.EditSchoolGradeLimit;
 import com.gemini.admin.beans.forms.SchoolGradeLimitResult;
 import com.gemini.admin.beans.forms.UserSearchResult;
 import com.gemini.admin.beans.requests.SchoolGradeLimitEditRequest;
+import com.gemini.admin.beans.requests.SchoolLimitSearchRequest;
 import com.gemini.admin.services.ManagePortalUserService;
 import com.gemini.admin.services.ManageSchoolCapsService;
 import com.google.common.collect.Lists;
@@ -32,9 +33,9 @@ public class ManageSchoolCapsController {
     private ManageSchoolCapsService schoolCapsService;
 
 
-    @RequestMapping(value = "/search/{schoolId}")
-    public ResponseEntity<List<SchoolGradeLimitResult>> searchCaps(@PathVariable Long schoolId) {
-        return ResponseEntity.ok(schoolCapsService.getGradeLimitsBySchool(schoolId));
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ResponseEntity<List<SchoolGradeLimitResult>> searchCaps(@RequestBody SchoolLimitSearchRequest request) {
+        return ResponseEntity.ok(schoolCapsService.getGradeLimitsBySchool(request));
     }
 
     @RequestMapping(value = "/edit/{schoolGradeLimitId}", method = RequestMethod.GET)

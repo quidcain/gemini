@@ -4,6 +4,26 @@ import {withRouter} from "react-router-dom";
 import * as store from "../../../../setup/store";
 import swal from 'sweetalert';
 import TextInput from "../../../../components/TextInput";
+import RemoteCodeSelect from "../../../../components/RemoteCodeSelect";
+
+const grades = [
+    {value: "PK", display: "PK-PreKinder"},
+    {value: "KG", display: "KG-Kindergarden"},
+    {value: "01", display: "01-Primero"},
+    {value: "02", display: "02-Segundo"},
+    {value: "03", display: "03-Tercero"},
+    {value: "04", display: "04-Cuarto"},
+    {value: "05", display: "05-Quinto"},
+    {value: "06", display: "06-Sexto"},
+    {value: "07", display: "07-Septimo"},
+    {value: "08", display: "08-Octavo"},
+    {value: "09", display: "09-Noveno"},
+    {value: "10", display: "10-Decimo"},
+    {value: "11", display: "11-Undecimo"},
+    {value: "12", display: "12-Duodécimo"},
+
+
+];
 
 class SearchSchoolMaxCapacity extends Component {
 
@@ -12,7 +32,8 @@ class SearchSchoolMaxCapacity extends Component {
         this.goToDetail = this.goToDetail.bind(this);
         this.doSearch = this.doSearch.bind(this);
         this.showEditCapField = this.showEditCapField.bind(this);
-        this.state = ({result: [], schoolId: null, newMaxCapacity: [], canEdit: []})
+        this.gradeLevelChanged = this.gradeLevelChanged.bind(this);
+        this.state = ({result: [], schoolId: null, newMaxCapacity: [], canEdit: [], gradeLevel: -1})
     }
 
     //No longer use
@@ -22,6 +43,10 @@ class SearchSchoolMaxCapacity extends Component {
 
     };
 
+    gradeLevelChanged(gradeLevelObj) {
+        this.setState({...this.state, gradeLevel: gradeLevelObj.value})
+    }
+
     inputHandler = (i) => (e) => {
         let element = e.target;
         let form = this.state;
@@ -30,7 +55,7 @@ class SearchSchoolMaxCapacity extends Component {
 
 
     saveConfirmedCap = (obj, i) => (e) => {
-
+        let schoolId = this.refs.selector.getSchoolId();
         let schoolCap = obj;
         let form = {
             schoolId: schoolCap.schoolId,
@@ -40,6 +65,11 @@ class SearchSchoolMaxCapacity extends Component {
 
         if (!this.state.newMaxCapacity[i]) {
             swal("!!!Debe ingresar una capacidad valida para poder guardar!!!", {icon: "error"});
+            return;
+        }
+
+        if (!schoolId || parseInt(schoolId) < 0) {
+            swal("!!!Debes seleccionar una escuela para poder guarda el cupo!!!");
             return;
         }
 
@@ -58,15 +88,14 @@ class SearchSchoolMaxCapacity extends Component {
     };
 
     doSearch() {
+        let regionId = this.refs.selector.getRegionId();
+        let cityCode = this.refs.selector.getCityCode();
         let schoolId = this.refs.selector.getSchoolId();
-        if (!schoolId || parseInt(schoolId) < 0) {
-            swal("!!!Debes seleccionar una escuela para poder buscar los cupos!!!");
-            return;
-        }
 
-        let criteria = {schoolId: schoolId};
+        let criteria = {regionId: regionId, cityCode: cityCode, schoolId: schoolId, gradeLevel: this.state.gradeLevel};
         store.services()
             .doSchoolCapsSearch(criteria)
+            .then((response) => response.json())
             .then((result) => {
                 let canEdit = [];
                 let newMaxCapacity = [];
@@ -88,11 +117,13 @@ class SearchSchoolMaxCapacity extends Component {
     render() {
         let result = this.state.result;
         let isDirectorUser = store.getUser() ? store.getUser().directorUserOverride : false;
+        let schoolId = this.refs.selector ? this.refs.selector.getSchoolId() : null;
+        let schoolNotSelected = !schoolId || parseInt(schoolId) < 0;
 
         return [
             <div className="row">
                 <div className="col-md-12">
-                    <h3>Validaci&oacute;n de Cupos</h3>
+                    <h3>Espacios Disponibles para Estudiantes por Grado</h3>
                 </div>
             </div>,
 
@@ -100,8 +131,18 @@ class SearchSchoolMaxCapacity extends Component {
                 <div className="col-md-12">
 
                     <div className="row" style={{paddingTop: 20}}>
-                        <div className="col-md-10">
+                        <div className="col-md-8">
                             <AdminSchoolSelector ref="selector"/>
+                        </div>
+
+                        <div className="col-md-2">
+                            <RemoteCodeSelect id="gradeLevel"
+                                              label="Grados"
+                                              placeholder="Grados"
+                                              codes={grades}
+                                              onObjectChange={this.gradeLevelChanged}
+                                              target="value"
+                                              display="display"/>
                         </div>
                         <div className="col-md-2">
                             <button className="button-green" style={{paddingLeft: 10}} onClick={this.doSearch}>
@@ -114,11 +155,13 @@ class SearchSchoolMaxCapacity extends Component {
                         <table className="table table-striped table-hover ">
                             <thead>
                             <tr>
+                                <th>Escuela</th>
                                 <th>Grado</th>
                                 <th>Capacidad Máxima</th>
-                                <th>Capacidad Máxima Confirmada por el Director</th>
-                                {/*<th>Sobrecapacidad</th>*/}
-                                <th/>
+                                <th>Total de Matrícula</th>
+                                <th>Capacidad Restante</th>
+                                {schoolNotSelected ? (null) : (<th>Capacidad Máxima Confirmada por el Director</th>)}
+                                {schoolNotSelected ? (null) : (<th/>)}
                             </tr>
                             </thead>
                             <tbody>
@@ -126,11 +169,15 @@ class SearchSchoolMaxCapacity extends Component {
                                 ?
                                 result.map((sgl, i) => (
                                     <tr style={{background: "white"}}>
+                                        <td>{sgl.schoolName}</td>
                                         <td>{sgl.gradeLevelDescription}</td>
                                         <td>{sgl.maxCapacity}</td>
-                                        <td onClick={this.toggleEdit(i)}>{this.showEditCapField(sgl, i)}</td>
+                                        <td>{sgl.enrollmentTotal}</td>
+                                        <td>{sgl.remainCap}</td>
+                                        {schoolNotSelected ? (null) : (
+                                            <td onClick={this.toggleEdit(i)}>{this.showEditCapField(sgl, i)}</td>)}
                                         {/*<td>{sgl.isOvercapacity ? "Sí" : "No"}</td>*/}
-                                        {isDirectorUser ? (
+                                        {isDirectorUser && !schoolNotSelected ? (
                                                 <td onClick={this.saveConfirmedCap(sgl, i)}><i className="fa fa-save"
                                                                                                style={{fontSize: 32}}/>
                                                 </td>)

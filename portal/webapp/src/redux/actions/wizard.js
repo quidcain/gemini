@@ -127,6 +127,26 @@ const editTechnicalFlow = [
     getIndexFromCatalog("PRE_ENROLLMENT_CONFIRMED")
 ];
 
+//after close SIE-Registro
+const locateFlow = [
+    getIndexFromCatalog("USER_PROFILE"),
+    getIndexFromCatalog("STUDENT_LOOKUP"),
+    getIndexFromCatalog("NOT_FOUND_QUESTION"),
+    getIndexFromCatalog("FOUND_INFO"),
+    getIndexFromCatalog("PERSONAL_INFO"),
+    getIndexFromCatalog("ADDRESS"),
+    getIndexFromCatalog("NEED_TRANSPORTATION_QUESTION"),
+
+    getIndexFromCatalog("PRE_ENROLLMENT_ALTERNATE_SCHOOLS_SELECTION"),
+    getIndexFromCatalog("PRE_ENROLLMENT_ALTERNATE_SCHOOLS_SUBMIT"),
+
+    getIndexFromCatalog("END_ENROLLMENT_LOCATION"),
+
+    getIndexFromCatalog("PRE_ENROLLMENT_COMPLETED"),
+    getIndexFromCatalog("PRE_ENROLLMENT_CONFIRMED")
+
+];
+
 function getIndexFromCatalog(type) {
     for (let idx in catalog) {
         let page = catalog[idx];
@@ -200,7 +220,7 @@ function conditionedQuestionAnswer(dispatch, currentForm, answer) {
     }
 }
 
-export const load = (requestId) => (dispatch, getState) => {
+export const loadOld = (requestId) => (dispatch, getState) => {
     dispatch({type: types.ON_WIZARD_LOAD_START});
     let user = getState().profile.user;
     let profileCompleted = user.profileCompleted;
@@ -231,6 +251,36 @@ export const load = (requestId) => (dispatch, getState) => {
     })
 };
 
+export const load = (requestId) => (dispatch, getState) => {
+    dispatch({type: types.ON_WIZARD_LOAD_START});
+    let user = getState().profile.user;
+    let profileCompleted = user.profileCompleted;
+    let editing = requestId;
+
+    flow = locateFlow;
+    let startPage = profileCompleted ? getIndexFromFlow("STUDENT_LOOKUP") : 0;
+    if (editing) {
+        startPage = getIndexFromFlow('PERSONAL_INFO');
+        requestId = requestId || user.workingPreEnrollmentId;
+    }
+
+    let startForm = getForm(startPage);
+    let footerType = editing && startForm.editFooterType
+        ? startForm.editFooterType
+        : startForm.footerType;
+
+    dispatch({
+        type: types.ON_WIZARD_LOAD_END,
+        current: startPage,
+        footerType: footerType,
+        pageType: startForm.type,
+        editing: editing,
+        formsToDisplay: flow,
+        workingRequestId: requestId
+    })
+};
+
+
 export const goToAction = (type) => (dispatch) => {
     if (exists(type)) {
         let next = getIndexFromFlow(type);
@@ -256,15 +306,17 @@ function isRegularOrSpecializedFlow(preEnrollment) {
     return (preEnrollment.type === types.REGULAR_ENROLLMENT || preEnrollment.type === types.REGULAR_ALTERNATE_SCHOOLS || preEnrollment.type === types.SPECIALIZED_SCHOOLS_ENROLLMENT)
 }
 
-function nextOnTransportationPage(preEnrollment, currentForm) {
+function nextOnTransportationPage(preEnrollment, student, currentForm) {
     let preEnrollmentInfo = preEnrollment.info;
-    if (!preEnrollmentInfo.canGoToFoundEnrollment) {
-        let onNotFound;
+    // if (!preEnrollmentInfo.canGoToFoundEnrollment) {
+    let onNotFound = currentForm.nextShowEnrollmentLocation;
+    if (!student || student.studentNumber === undefined || student.studentNumber <= 0)
         switch (preEnrollment.type) {
             case types.SPECIALIZED_SCHOOLS_ENROLLMENT:
                 onNotFound = currentForm.nextSpecializedOnNotFoundPreEnrollment;
                 break;
             case types.REGULAR_ALTERNATE_SCHOOLS:
+            case types.REGULAR_ENROLLMENT:
                 onNotFound = currentForm.nextRegularOnNotFoundPreEnrollment;
                 break;
             case types.OCCUPATIONAL_ENROLLMENT:
@@ -276,10 +328,11 @@ function nextOnTransportationPage(preEnrollment, currentForm) {
                 onNotFound = currentForm.nextRegularOnNotFoundPreEnrollment;
 
         }
-        return getIndexFromFlow(onNotFound)
-    } else {
-        return getIndexFromFlow(currentForm.onFound);
-    }
+    return getIndexFromFlow(onNotFound)
+    // }
+    // else {
+    //     return getIndexFromFlow(currentForm.onFound);
+    // }
 }
 
 function nextOnReasonPage(preEnrollment, currentForm) {
@@ -320,7 +373,7 @@ export const onNextAction = (onPress) => (dispatch, getState) => {
     if (currentForm.isQuestion || currentForm.isSubmit) {
         next = getIndexFromFlow(currentForm.yes);
     } else if (isType(current, "NEED_TRANSPORTATION_QUESTION") && (isRegularOrSpecializedFlow(preEnrollment) || isOccupational(preEnrollment))) {
-        next = nextOnTransportationPage(preEnrollment, currentForm)
+        next = nextOnTransportationPage(preEnrollment, student, currentForm)
     } else if (isType(current, "REASON_FOR_NOT_ATTENDING_QUESTION") && isRegularOrSpecializedFlow(preEnrollment)) {
         next = nextOnReasonPage(preEnrollment, currentForm);
     } else if (isType(current, "END_PRE_ENROLLMENT_BY_MOVE_OUT_OF_COUNTRY") || isType(current, "PRE_ENROLLMENT_CONFIRMED")) {
@@ -348,8 +401,13 @@ export const onNextAction = (onPress) => (dispatch, getState) => {
             dispatch({type: types.ON_WIZARD_COMPLETED, startOver: false});
             return;
         }
+        else if (isType(current, "END_PRE_ENROLLMENT_BY_MOVE_OUT_OF_COUNTRY")) {
+            dispatch({type: types.ON_WIZARD_COMPLETED, startOver: false});
+            return;
+        }else if(isType(current, "END_ENROLLMENT_LOCATION")){
+            maxCurrent = current;
+        }
 
-         maxCurrent = current;
         if (maxCurrent === current) {
             dispatch({type: types.ON_WIZARD_COMPLETED, startOver: false});
         } else {
@@ -389,6 +447,7 @@ function previousOnSubmit(preEnrollment, currentForm) {
 export const onPreviousAction = (onPress) => (dispatch, getState) => {
     dispatch({type: types.ON_WIZARD_PREVIOUS_START});
     let preEnrollment = getState().preEnrollment;
+    let student = getState().studentInfo.student;
     let wizard = getState().wizard;
     let flowNavigation = wizard.flowNavigation;
     let current = wizard.current;
@@ -406,7 +465,8 @@ export const onPreviousAction = (onPress) => (dispatch, getState) => {
     } else if (currentForm.isSubmit) {
         next = previousOnSubmit(preEnrollment, currentForm)
     } else if (isType(current, "NEED_TRANSPORTATION_QUESTION")) {
-        next = nextOnTransportationPage(preEnrollment, currentForm);
+        next = nextOnTransportationPage(preEnrollment, student, currentForm);
+        // next = current + 1;
     } else {
         next = flowNavigation.length > 0
             ? pop(flowNavigation, 2)
@@ -415,7 +475,9 @@ export const onPreviousAction = (onPress) => (dispatch, getState) => {
     let nextForm = getForm(next);
 
     onPress((result) => {
-        maxCurrent = current;
+
+        // if (isType(current, "NOT_FOUND_QUESTION"))
+        //     maxCurrent = current;
 
         if (maxCurrent === current) {
             dispatch({type: types.ON_WIZARD_COMPLETED, startOver: false});
@@ -432,6 +494,7 @@ export const onPreviousAction = (onPress) => (dispatch, getState) => {
 };
 
 function changeFormFlow(selection, dispatch, preEnrollment, edited = false) {
+    return;
     switch (selection) {
         case types.OCCUPATIONAL_ENROLLMENT:
             changeToOccupationalForm(dispatch, preEnrollment, edited ? editOccupationalFlow : occupationalFlow);

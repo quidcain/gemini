@@ -5,7 +5,7 @@ import React, {Component} from "react";
 import moment from "moment";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {loadHome, resetWizard} from "../redux/actions";
+import {loadHome, resetWizard, changeToScheduleView} from "../redux/actions";
 import AnimationHelper from "../components/AnimationHelper";
 import * as UIHelper from "../UIHelper";
 import Button from "../components/Button";
@@ -48,7 +48,18 @@ class Home extends Component {
     editAddress = (pre) => e => {
         let id = pre.id;
         this.props.history.push(`/edit/address/${id}`);
+    };
 
+    viewStudentSchedule = (pre) => e => {
+        let studentNumber = pre.student.studentNumber;
+        let fullName = pre.student.fullName;
+        let gradeLevel = pre.nextGradeLevelDescription;
+        let school = pre.schoolName;
+        let obj = {fullName: fullName, gradeLevel: gradeLevel, school: school};
+
+        this.props.changeToScheduleView(obj, () => {
+            this.props.history.push(`/schedule/${studentNumber}`);
+        });
 
     };
 
@@ -94,6 +105,12 @@ class Home extends Component {
 
                     <span
                         className="f20slg">A continuaci&oacute;n un resumen de las matr&iacute;culas realizadas.&nbsp;&nbsp;&nbsp;</span>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <Button size="small" style={{width: '40%'}}
+                                    onClick={this.preEnroll}>{UIHelper.getText("searchEnrollmentButton")}</Button>
+                        </div>
+                    </div>
                 </div>
                 <div className="body d-flex flex-column justify-content-end">
                     {this.renderHome()}
@@ -169,14 +186,6 @@ class Home extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-3">
-                                Fecha:
-                            </div>
-                            <div className="col-md-9">
-                                {(pre.submitDate && moment(pre.submitDate).format('LL, h:mm:ss a')) || "Aún no ha sido sometida"}
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-3">
                                 Grado:
                             </div>
                             <div className="col-md-9">
@@ -200,6 +209,28 @@ class Home extends Component {
                                     <i className="fas fa-location-arrow"/>
                                 </Button>
                             </div>
+
+                            {
+                                pre && pre.student && pre.student.studentNumber && pre.student.studentNumber > 0
+                                    ? (<div className="col-md-2">
+                                        <Button bsSize="small" bsStyle="info"
+                                                onClick={this.viewStudentSchedule(pre)}>
+                                            <i className="fas fa-calendar-alt"/>
+                                        </Button>
+                                    </div>)
+                                    : (null)
+                            }
+
+                            {
+                                pre && pre.student && pre.student.studentNumber <= 0
+                                    ? (<div className="col-md-2">
+                                        <Button bsSize="small" bsStyle="info"
+                                                onClick={this.editPreEnroll(pre)}>
+                                            <i className="fas fa-edit"/>
+                                        </Button>
+                                    </div>)
+                                    : (null)
+                            }
 
                             {/*{pre.nextGradeLevelDescription*/}
                             {/*? (<div className="col-md-2">*/}
@@ -281,7 +312,7 @@ function mapStateToProps(store) {
 }
 
 function mapDispatchToActions(dispatch) {
-    return bindActionCreators({loadHome, resetWizard}, dispatch)
+    return bindActionCreators({loadHome, resetWizard, changeToScheduleView}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToActions)(Home);

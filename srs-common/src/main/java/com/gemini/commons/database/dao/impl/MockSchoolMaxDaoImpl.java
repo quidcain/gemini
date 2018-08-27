@@ -85,6 +85,11 @@ public class MockSchoolMaxDaoImpl implements SchoolMaxDaoInterface {
     }
 
     @Override
+    public EnrollmentInfo findSIEStudentEnrollment(Long studentId) {
+        return null;
+    }
+
+    @Override
     public List<School> findSchoolsByRegionAndGradeLevel(Long regionId, Long schoolYear, String gradeLevel) {
         final List<String> schoolNames = Arrays.asList("Mejor Aprovechamiento", "Lealtad", "Honestidad", "Persistente", "Resiliente");
 
@@ -213,5 +218,10 @@ public class MockSchoolMaxDaoImpl implements SchoolMaxDaoInterface {
     @Override
     public boolean schoolInMontesorri(Long schoolId) {
         return false;
+    }
+
+    @Override
+    public List<StudentScheduleView> getStudentScheduleView(Long studentId) {
+        return null;
     }
 }

@@ -1,7 +1,12 @@
 package com.gemini.admin.database.dao;
 
+import com.gemini.admin.beans.AdminUser;
+import com.gemini.admin.beans.Criteria;
 import com.gemini.admin.beans.CriteriaForm;
 import com.gemini.admin.database.dao.beans.EnrolledStudent;
+import com.gemini.admin.database.dao.beans.SchoolEnrollmentSummaryRow;
+import com.gemini.admin.database.dao.beans.SchoolStudentEnrolledRow;
+import com.gemini.admin.database.dao.beans.StudentAddressSummaryRow;
 
 import java.util.List;
 
@@ -29,4 +34,9 @@ public interface ReportDao {
 
     List<EnrolledStudent> getVocationalEnrollmentsBySchoolId(Long schoolId);
 
+    List<StudentAddressSummaryRow> getStudentAddressSummary(AdminUser user, Criteria criteria);
+
+    List<SchoolEnrollmentSummaryRow> getSchoolEnrollmentSummary(AdminUser user, Criteria criteria);
+
+    List<SchoolStudentEnrolledRow> getSchoolStudentEnrolledSummary(AdminUser user, Criteria criteria);
 }

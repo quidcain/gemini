@@ -1,10 +1,12 @@
 package com.gemini.services;
 
+import com.gemini.beans.forms.StudentScheduleForm;
 import com.gemini.beans.requests.StudentAnswerAgreementRequest;
 import com.gemini.commons.beans.forms.EthnicCodeBean;
 import com.gemini.commons.beans.forms.StudentDemographicsBean;
 import com.gemini.beans.requests.StudentAnswerRequest;
 import com.gemini.beans.requests.StudentDemographicsRequest;
+import com.gemini.commons.database.beans.StudentScheduleView;
 import com.gemini.commons.database.jpa.entities.EthnicCodeEntity;
 import com.gemini.commons.database.jpa.entities.PreEnrollmentRequestEntity;
 import com.gemini.commons.database.jpa.entities.StudentEntity;
@@ -35,6 +37,8 @@ public class StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private PreEnrollmentRepository preEnrollmentRepository;
+    @Autowired
+    private SchoolmaxService schoolmaxService;
 
     @Transactional
     public StudentDemographicsBean retrieveDemographicsInfo(Long studentId) {
@@ -112,13 +116,12 @@ public class StudentService {
         return entity != null;
     }
 
-
     @Transactional
     public boolean saveRequestTransportation(Boolean answer, Long preEnrollmentId) {
 
         PreEnrollmentRequestEntity entity = preEnrollmentRepository.findOne(preEnrollmentId);
         StudentEntity studentEntity = entity.getStudent();
-        studentEntity.setTransportationRequested(answer);
+        studentEntity.setTransportationRequested(answer == null ? false : answer);
         studentEntity = studentRepository.save(studentEntity);
 
         return studentEntity != null;
@@ -130,5 +133,10 @@ public class StudentService {
         entity.setAuthorization_365(request.getAnswer());
         entity = studentRepository.save(entity);
         return entity != null;
+    }
+
+    public List<StudentScheduleForm> getStudentScheduleView(Long studentId){
+        List<StudentScheduleView> row = schoolmaxService.getStudentScheduleView(studentId);
+        return CopyUtils.convert(row, StudentScheduleForm.class);
     }
 }

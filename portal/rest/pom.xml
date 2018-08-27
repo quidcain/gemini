@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>portal-rest</artifactId>
-    <version>1.0.10_PROD</version>
+    <version>1.0.13_PROD</version>
     <packaging>war</packaging>
 
     <name>portal :: api</name>

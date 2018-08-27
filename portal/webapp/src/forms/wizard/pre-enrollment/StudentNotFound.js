@@ -13,7 +13,7 @@ export default class StudentNotFound extends Component {
         return [
             <div className="col-md-7 content-section">
                 <div className="title">
-                    <div className="description mb40"><h2 className="f90sbg">05.</h2>
+                    <div className="description mb40"><h2 className="f90sbg">¡Oh!</h2>
                         <div className="violet-line"></div>
                     </div>
                     <div className="search-empty visible" style={{position: "static"}}>
@@ -22,6 +22,11 @@ export default class StudentNotFound extends Component {
                         <div className="row">
                             <span style={{paddingLeft: 50}} className="f40sbb">¡Oh! ¡Oh!</span>
                             <div className="col-md-12 text-center">
+                                {/*<p style={{textAlign: "justify"}}> La búsqueda no fue exitosa. Si ingresaste los datos*/}
+                                    {/*correctos, debes visitar la escuela donde deseas matricular a su hijo/a, por otro*/}
+                                    {/*lado, si deseas realizar una busqueda nuevamente, presiona el botón de <span*/}
+                                        {/*className="f20slb">‘buscar nuevamente’</span>.&nbsp;&nbsp;Para salir de la*/}
+                                    {/*búsqueda presione el botón <span className="f20slb">‘Salir’</span>.</p>*/}
                                 <p style={{textAlign: "justify"}}> La búsqueda no fue exitosa. Si crees que ingresaste algún dato equivocado,
                                     presiona el botón de <span className="f20slb">‘buscar nuevamente’</span>.&nbsp;&nbsp;Por otro lado, si ingresaste los datos
                                     correctos, presiona el botón de <span className="f20slb">‘crear registro’</span>.</p>
@@ -30,8 +35,6 @@ export default class StudentNotFound extends Component {
                         </div>
                     </div>
                 </div>
-
-
                 {this.props.footer}
             </div>
             ,

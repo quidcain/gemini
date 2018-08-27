@@ -71,13 +71,18 @@ public class PreEnrollmentRequestController {
         return ResponseEntity.ok(ResponseBase.success(requestId, studentInfo));
     }
 
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ResponseEntity<ResponseBase> savePreEnrollmentRequest(@Valid @RequestBody PreEnrollmentInitialRequest initialRequest, BindingResult result, @AuthenticationPrincipal User loggedUser) {
         if (result.hasErrors() && !ValidationUtils.valid(initialRequest.getStudentNumber())) {
             ResponseBase responseBase = messageHelper.missingFormFields(result);
             responseBase.setRequestId(initialRequest.getRequestId());
             return ResponseEntity.badRequest().body(responseBase);
         }
+
+//        if (!ValidationUtils.valid(initialRequest.getStudentNumber())) {
+//            ResponseBase responseBase = ResponseBase.error("Validaci\u00f3n", messageHelper.processMessages("enrollment.error"));
+//            return ResponseEntity.ok().body(responseBase);
+//        }
 
         RequestSearchResult searchResult = preEnrollmentService.exists(initialRequest, loggedUser);
         if (searchResult.cannotUseRequest()) {
@@ -159,7 +164,7 @@ public class PreEnrollmentRequestController {
         return response;
     }
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST)
+//    @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public ResponseEntity<ResponseBase> submitPreEnrollment(@RequestBody PreEnrollmentSubmitRequest submitRequest, @AuthenticationPrincipal User loggedUser) {
         boolean saved = false;
         try {
@@ -249,13 +254,15 @@ public class PreEnrollmentRequestController {
         return ResponseEntity.ok(ResponseBase.success(requestId, alternatePreEnrollmentBean));
     }
 
-//    @RequestMapping(value = "/alternate/partial/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/alternate/partial/save", method = RequestMethod.POST)
     public ResponseEntity<ResponseBase> partialAlternatePreEnrollmentSave(@RequestBody AlternateSchoolPreEnrollmentSubmitRequest request) {
-        List<SchoolValidationResponse> validationResponse = doSchoolAvailableSpaceValidation(request);
-        ResponseEntity<ResponseBase> response = doValidation(validationResponse);
-        if (response != null) {
-            return response;
-        }
+        /*
+            List<SchoolValidationResponse> validationResponse = doSchoolAvailableSpaceValidation(request);
+            ResponseEntity<ResponseBase> response = doValidation(validationResponse);
+            if (response != null) {
+                return response;
+            }
+        */
         boolean saved = preEnrollmentService.partialAlternatePreEnrollmentSave(request);
         if (saved)
             return ResponseEntity.ok(ResponseBase.success(request.getRequestId()));

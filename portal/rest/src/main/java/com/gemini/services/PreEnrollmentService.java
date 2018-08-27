@@ -17,6 +17,7 @@ import com.gemini.commons.database.beans.*;
 import com.gemini.commons.database.jpa.entities.*;
 import com.gemini.commons.database.jpa.respository.*;
 import com.gemini.commons.utils.CopyUtils;
+import com.gemini.commons.utils.GradeLevelUtils;
 import com.gemini.commons.utils.Utils;
 import com.gemini.commons.utils.ValidationUtils;
 import com.gemini.utils.EmailSchoolComparator;
@@ -81,7 +82,7 @@ public class PreEnrollmentService {
                 preEnrollmentBean = new PreEnrollmentBean();
                 address = smaxService.retrieveStudentAddress(studentNumber);
                 //let's find the most recent enrollment from SIS
-                EnrollmentInfo enrollmentInfo = smaxService.retrieveMostRecentEnrollment(student.getStudentId());
+                EnrollmentInfo enrollmentInfo = smaxService.findSIEStudentEnrollment(student.getStudentId());
                 if (enrollmentInfo != null) {
 
                     preEnrollmentBean = CopyUtils.convert(entity, PreEnrollmentBean.class);
@@ -265,18 +266,6 @@ public class PreEnrollmentService {
             List<PreEnrollmentBean> list = new ArrayList<>();
             for (PreEnrollmentRequestEntity entity : entities) {
                 PreEnrollmentBean preEnrollmentBean = getPreEnrollmentBean(entity);
-
-                //placement result school
-                if (ValidationUtils.valid(entity.getResultSchoolId())) {
-                    School school = getSchool(entity.getResultSchoolId());
-                    if (school != null) {
-                        preEnrollmentBean.setExtSchoolNumber(school.getExtSchoolNumber());
-                        preEnrollmentBean.setSchoolId(school.getSchoolId());
-                        preEnrollmentBean.setSchoolName(school.getSchoolName());
-                        preEnrollmentBean.setSchoolAddress(CopyUtils.createAddressBean(school));
-                    }
-                }
-
 
                 if (ValidationUtils.valid(entity.getSharedSchoolId()))
                     preEnrollmentBean.setSharedSchool(getSharedSchoolResponse(entity.getSharedSchoolId()));
@@ -751,7 +740,28 @@ public class PreEnrollmentService {
     private PreEnrollmentBean getPreEnrollmentBean(PreEnrollmentRequestEntity entity) {
         PreEnrollmentBean enrollmentBean = CopyUtils.convert(entity, PreEnrollmentBean.class);
         enrollmentBean.setStudent(getPreEnrollmentStudentInfoBean(entity));
-        if (ValidationUtils.valid(entity.getSchoolId())) {
+        setGradeLevelInfo(entity.getGradeLevel(), enrollmentBean);
+        //placement result school
+        StudentEntity studentEntity = entity.getStudent();
+        EnrollmentInfo enrollmentInfo = null;
+        if (ValidationUtils.valid(studentEntity.getSisStudentId()))
+            enrollmentInfo = smaxService.findSIEStudentEnrollment(studentEntity.getSisStudentId());
+
+        if (enrollmentInfo != null) {
+            School school = getSchool(enrollmentInfo.getSchoolId());
+            if (school != null) {
+                setSchoolInfo(enrollmentBean, school);
+            }
+            enrollmentBean.setNextGradeLevel(enrollmentInfo.getGradeLevel());
+            enrollmentBean.setNextGradeLevelDescription(GradeLevelUtils.getDescriptionByGradeLevel(enrollmentInfo.getGradeLevel()));
+            enrollmentBean.setRequestStatus(RequestStatus.APPROVED);
+
+        } else if (ValidationUtils.valid(entity.getResultSchoolId())) {
+            School school = getSchool(entity.getResultSchoolId());
+            if (school != null) {
+                setSchoolInfo(enrollmentBean, school);
+            }
+        } else if (ValidationUtils.valid(entity.getSchoolId())) {
             School school = getSchool(entity.getSchoolId());
             if (school != null) {
                 enrollmentBean.setExtSchoolNumber(school.getExtSchoolNumber());
@@ -770,7 +780,6 @@ public class PreEnrollmentService {
         enrollmentBean.setHasPreEnrollment(hasSIEEnrollment);
         enrollmentBean.setHasPreviousEnrollment(ValidationUtils.valid(entity.getPreviousEnrollmentId()));
         enrollmentBean.setDeniedByUser(ReasonForNotAttendingSchool.MOVE_OUT_OF_COUNTRY.equals(entity.getReasonForNotAttendSchool()));
-        setGradeLevelInfo(entity.getGradeLevel(), enrollmentBean);
         return enrollmentBean;
     }
 
@@ -850,6 +859,13 @@ public class PreEnrollmentService {
 
     private School getSchool(Long schoolId) {
         return smaxService.findSchoolById(schoolId);
+    }
+
+    private void setSchoolInfo(PreEnrollmentBean preEnrollmentBean, School school) {
+        preEnrollmentBean.setExtSchoolNumber(school.getExtSchoolNumber());
+        preEnrollmentBean.setSchoolId(school.getSchoolId());
+        preEnrollmentBean.setSchoolName(school.getSchoolName());
+        preEnrollmentBean.setSchoolAddress(CopyUtils.createAddressBean(school));
     }
 
 

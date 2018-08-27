@@ -135,7 +135,7 @@ class SearchRequestForm extends Component {
                                     <th>Email del Padre/Madre</th>
                                     <th>Estatus</th>
                                     <th>Sometido?</th>
-                                    {/*<th/>*/}
+                                    <th/>
                                     <th/>
                                     <th/>
                                 </tr>
@@ -150,9 +150,9 @@ class SearchRequestForm extends Component {
                                             <td><span className={r.cssStatusColor}>{r.status}</span></td>
                                             <td>{r.submitted}</td>
 
-                                            {/*{r.canApprove && (isSIEUser || isPlanificacionUser || isRegionalUser) ? (<td onClick={this.approveRequest(r)}>*/}
-                                                {/*<i className="fa fa-check-square" style={{fontSize: 20}}/></td>) : (*/}
-                                                {/*<td/>)}*/}
+                                            {r.canApprove && (isSIEUser || isPlanificacionUser || isRegionalUser) ? (<td onClick={this.approveRequest(r)}>
+                                                <i className="fa fa-check-square" style={{fontSize: 20}}/></td>) : (
+                                                <td/>)}
 
                                             {(isSIEUser || isPlanificacionUser) ? (<td onClick={this.transferRequest(r)}><i className="fa fa-exchange"
                                                                                      style={{fontSize: 20}}/></td>)

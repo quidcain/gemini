@@ -26,6 +26,9 @@ public class SchoolGradeLimit {
     private Integer planificacionMaxCapacity;
     private Integer maxCapacity;
     private Integer confirmedMaxCapacity;
+    private Integer remainCap;
+    private Integer enrollmentTotal;
+
 
     public Long getSchoolGradeLimitId() {
         return schoolGradeLimitId;
@@ -89,5 +92,21 @@ public class SchoolGradeLimit {
 
     public void setConfirmedMaxCapacity(Integer confirmedMaxCapacity) {
         this.confirmedMaxCapacity = confirmedMaxCapacity;
+    }
+
+    public Integer getRemainCap() {
+        return remainCap;
+    }
+
+    public void setRemainCap(Integer remainCap) {
+        this.remainCap = remainCap;
+    }
+
+    public Integer getEnrollmentTotal() {
+        return enrollmentTotal;
+    }
+
+    public void setEnrollmentTotal(Integer enrollmentTotal) {
+        this.enrollmentTotal = enrollmentTotal;
     }
 }

@@ -1,8 +1,11 @@
 package com.gemini.admin.database.dao.impl;
 
+import com.gemini.admin.beans.AdminUser;
+import com.gemini.admin.beans.Criteria;
 import com.gemini.admin.beans.CriteriaForm;
+import com.gemini.admin.database.AdminAccessHelper;
 import com.gemini.admin.database.dao.ReportDao;
-import com.gemini.admin.database.dao.beans.EnrolledStudent;
+import com.gemini.admin.database.dao.beans.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
@@ -188,5 +191,35 @@ public class ReportDaoImpl extends NamedParameterJdbcDaoSupport implements Repor
         String sql = VOCATIONAL_SQL.concat(" WHERE P.TYPE = 'OCCUPATIONAL' AND PV.SCHOOL_ID = ? ")
                 .concat(ORDER_BY);
         return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(EnrolledStudent.class), schoolId);
+    }
+
+    @Override
+    public List<StudentAddressSummaryRow> getStudentAddressSummary(AdminUser user, Criteria criteria) {
+        String sql = "select * from VW_STUDENT_ADDRESS_SUMMARY where 1=1 ";
+
+        sql = sql.concat(AdminAccessHelper.addCriteriaFromUserInput(user, criteria));
+        sql = sql.concat(" ORDER BY REGION_NAME, CITY, SCHOOL_NAME ");
+
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(StudentAddressSummaryRow.class));
+    }
+
+    @Override
+    public List<SchoolEnrollmentSummaryRow> getSchoolEnrollmentSummary(AdminUser user, Criteria criteria) {
+        String sql = "select * from VW_SCHOOL_ENROLLMENT_SUMMARY where 1=1 ";
+
+        sql = sql.concat(AdminAccessHelper.addCriteriaFromUserInput(user, criteria));
+        sql = sql.concat(" ORDER BY REGION_NAME, CITY, SCHOOL_NAME ");
+
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(SchoolEnrollmentSummaryRow.class));
+    }
+
+    @Override
+    public List<SchoolStudentEnrolledRow> getSchoolStudentEnrolledSummary(AdminUser user, Criteria criteria) {
+        String sql = "select * from VW_SCHOOL_STUDENT_ENROLLED where 1=1 ";
+
+        sql = sql.concat(AdminAccessHelper.addCriteriaFromUserInput(user, criteria));
+        sql = sql.concat(" ORDER BY REGION_NAME, CITY, SCHOOL_NAME ");
+
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(SchoolStudentEnrolledRow.class));
     }
 }

@@ -1,13 +1,14 @@
 package com.gemini.admin.services;
 
 import com.gemini.admin.beans.AdminUser;
+import com.gemini.admin.beans.Criteria;
 import com.gemini.admin.beans.SchedulingCriteriaForm;
-import com.gemini.admin.beans.report.SchedulingReport;
-import com.gemini.admin.beans.report.StudentReport;
+import com.gemini.admin.beans.report.*;
 import com.gemini.admin.beans.types.ReportType;
 import com.gemini.admin.database.dao.ReportDao;
 import com.gemini.admin.database.dao.SchedulingReportDao;
-import com.gemini.admin.database.dao.beans.EnrolledStudent;
+import com.gemini.admin.database.dao.StaffReportDao;
+import com.gemini.admin.database.dao.beans.*;
 import com.gemini.commons.utils.CopyUtils;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ReportService {
 
     @Autowired
     private ReportDao reportDao;
+
+    @Autowired
+    private StaffReportDao staffReportDao;
 
     @Autowired
     private SchedulingReportDao schedulingReportDao;
@@ -115,6 +119,55 @@ public class ReportService {
                     break;
             }
         return data;
+    }
+
+    //staff and enrollment info
+    public List<StaffSummary> getSummaryByRegion(AdminUser user, Criteria criteria) {
+        List<StaffSummaryRow> rows = staffReportDao.getSummaryByRegion(user, criteria);
+        return CopyUtils.convert(rows, StaffSummary.class);
+    }
+
+    public List<StaffSummary> getSummaryByCity(AdminUser user, Criteria criteria) {
+        List<StaffSummaryRow> rows = staffReportDao.getSummaryByCity(user, criteria);
+        return CopyUtils.convert(rows, StaffSummary.class);
+    }
+
+    public List<StaffSummary> getSummaryBySchool(AdminUser user, Criteria criteria) {
+        List<StaffSummaryRow> rows = staffReportDao.getSummaryBySchool(user, criteria);
+        return CopyUtils.convert(rows, StaffSummary.class);
+    }
+
+    public List<EnrollmentAndStaffSummary> getEnrollmentAndStaffSummary(AdminUser user, Criteria criteria) {
+        List<EnrollmentStaffingRow> rows = staffReportDao.getEnrollmentAndStaffSummary(user, criteria);
+        return CopyUtils.convert(rows, EnrollmentAndStaffSummary.class);
+    }
+
+    public List<VacantSummary> getVacantSummary(AdminUser user, Criteria criteria) {
+        List<VacantSummaryRow> rows = staffReportDao.getVacantSummary(user, criteria);
+        return CopyUtils.convert(rows, VacantSummary.class);
+    }
+
+    public List<DetailedRosterReport> getDetailedReportData(AdminUser user, Criteria criteria) {
+        List<DetailedRosterRow> rows = staffReportDao.getDetailedRoster(user, criteria);
+        return CopyUtils.convert(rows, DetailedRosterReport.class);
+    }
+
+    public List<ClassGroupWithoutTeacher> getClassGroupWithoutTeacher(AdminUser user, Criteria criteria) {
+        List<ClassGroupWithoutTeacherRow> rows = staffReportDao.getClassGroupWithoutTeacher(user, criteria);
+        return CopyUtils.convert(rows, ClassGroupWithoutTeacher.class);
+    }
+
+    public List<StudentAddressSummary> getStudentAddressSummary(AdminUser user, Criteria criteria) {
+        List<StudentAddressSummaryRow> rows = reportDao.getStudentAddressSummary(user, criteria);
+        return CopyUtils.convert(rows, StudentAddressSummary.class);
+    }
+
+    //enrollment monitor info
+    public SchoolRosterReport getSchoolRosterData(AdminUser user, Criteria criteria) {
+        List<SchoolEnrollmentSummaryRow> schoolRows = reportDao.getSchoolEnrollmentSummary(user, criteria);
+        List<SchoolStudentEnrolledRow> studentRows = reportDao.getSchoolStudentEnrolledSummary(user, criteria);
+        return new SchoolRosterReport(schoolRows, studentRows);
+
     }
 
 

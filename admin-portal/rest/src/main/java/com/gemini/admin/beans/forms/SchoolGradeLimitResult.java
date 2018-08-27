@@ -9,10 +9,13 @@ package com.gemini.admin.beans.forms;
 public class SchoolGradeLimitResult {
     private Long schoolGradeLimitId;
     private Long schoolId;
+    private String schoolName;
     private String gradeLevel;
     private String gradeLevelDescription;
     private Integer confirmedMaxCapacity;
     private Integer maxCapacity;
+    private Integer remainCap;
+    private Integer enrollmentTotal;
 
     public Long getSchoolGradeLimitId() {
         return schoolGradeLimitId;
@@ -28,6 +31,14 @@ public class SchoolGradeLimitResult {
 
     public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public String getGradeLevel() {
@@ -60,5 +71,21 @@ public class SchoolGradeLimitResult {
 
     public void setMaxCapacity(Integer maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public Integer getRemainCap() {
+        return remainCap;
+    }
+
+    public void setRemainCap(Integer remainCap) {
+        this.remainCap = remainCap;
+    }
+
+    public Integer getEnrollmentTotal() {
+        return enrollmentTotal;
+    }
+
+    public void setEnrollmentTotal(Integer enrollmentTotal) {
+        this.enrollmentTotal = enrollmentTotal;
     }
 }

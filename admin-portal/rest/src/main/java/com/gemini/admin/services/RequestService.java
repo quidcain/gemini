@@ -108,7 +108,9 @@ public class RequestService {
                         RequestStatus status = entity.getRequestStatus();
                         searchResult.setCanApprove(!RequestStatus.APPROVED.equals(status)
                                 && !RequestStatus.ACTIVE.equals(status)
-                                && !EnrollmentType.OCCUPATIONAL.equals(entity.getType()));
+                                && !EnrollmentType.OCCUPATIONAL.equals(entity.getType())
+                                && EntryType.NEW.equals(student.getEntryType())
+                        );
 
 
                         List<School> schools = new ArrayList<>();

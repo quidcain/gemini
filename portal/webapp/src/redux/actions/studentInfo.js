@@ -87,7 +87,6 @@ export const copyPhysicalToPostal = () => (dispatch, getState) => {
 export const saveAddress = (form, onResult, onError, requestIdParam) => (dispatch, getState) => {
     dispatch({type: types.STUDENT_SAVE_ADDRESS_START});
     form.requestId = getState().preEnrollment.requestId || requestIdParam;
-    console.log(form.needTransportation);
     services()
         .savePreEnrollmentAddress(form)
         .then((response) => response.json())
@@ -222,6 +221,27 @@ export const saveNeedTransportationService = (answer, onResult, onError) => (dis
                 onResult();
             else {
                 onError(Utils.errorObj(response));
+                dispatch({type: types.CANCEL_BLOCK_UI});
+            }
+
+        });
+};
+
+export const changeToScheduleView = (form, onResult) => (dispatch)=>{
+    dispatch({type: types.SET_STUDENT_SELECT, response: form});
+    onResult();
+};
+
+export const loadStudentSchedule = (studentId, onResult, onError) => (dispatch) => {
+    dispatch({type: types.STUDENT_SCHEDULE_START});
+    services()
+        .loadStudentSchedule(studentId)
+        .then((response) => {
+            dispatch({type: types.STUDENT_SCHEDULE_END, response: response});
+            if (response.successfulOperation)
+                onResult();
+            else {
+                // onError(Utils.errorObj(response));
                 dispatch({type: types.CANCEL_BLOCK_UI});
             }
 

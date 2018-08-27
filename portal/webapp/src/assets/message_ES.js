@@ -107,12 +107,16 @@ export default {
     enrollmentPageMessagePage: "Su hijo tiene un expediente de matrícula para el próximo año escolar ",
     enrollmentChangeQuestion: "¿Confirma tu matrícula?",
 
+    //Enrollment Location
+    enrollmentLocationNumber: "Matrícula Localizada",
+    enrollmentLocationPage: "Su hijo tiene un expediente de matrícula para el año escolar ",
+
     //Alternate Enrollment Page
     alternateEnrollmentError: "Ha Ocurrido un error disculpe el inconveniente",
-    alternateEnrollmentTitleStart: "Confirmación de ",
+    alternateEnrollmentTitleStart: "Solicitud de ",
     alternateEnrollmentTitleEnd: "matrícula ",
     alternateEnrollmentMessageStart: "Vamos a crear un registro.",
-    alternateEnrollmentMessage: "Selecciona dos opciones de escuelas para la matrícula del año escolar ",
+    alternateEnrollmentMessage: "Selecciona una escuela para la matrícula del año escolar ",
 
     //Alternate Specialized Enrollment Page
     alternateSpecializedEnrollmentError: "Ha Ocurrido un error disculpe el inconveniente",
@@ -158,8 +162,9 @@ export default {
     institutePageMessageEnd: " Por favor seleccione un instituto:",
 
     //Home Page
-    enrollmentLabel: "¿Desea matricular un estudiante?",
     enrollmentButton: "Matricular",
+    searchEnrollmentButton: "Agregar/Buscar Matricular",
+
     regularButton: "regular",
     occupationalButton: "ocupacional",
     specializedButton: "especializada",
@@ -211,6 +216,7 @@ export default {
     moveBackButton: "Retroceder",
     searchAgainButton: "Buscar Nuevamente",
     createRegisterButton: "Crear Registro",
+    endButton: "Salir",
     startSessionButton: "Iniciar sesión",
 
     // account management messages

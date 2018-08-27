@@ -14,7 +14,11 @@ const initialState = {
     physicalAddress: {line1: '', line2: '', city: '', country: '', zipcode: ''},
     postalAddress: {line1: '', line2: '', city: '', country: '', zipcode: ''},
     needTransportation: false,
-    addressLoad: false
+    addressLoad: false,
+    studentScheduleView: [],
+    fullName: null,
+    gradeLevel: null,
+    school: null
 };
 
 const studentInfo = (state = Utils.freezeObject(initialState), action) => {
@@ -48,8 +52,20 @@ const studentInfo = (state = Utils.freezeObject(initialState), action) => {
             return {...state, demographics: {...state.demographics, saved: true}};
         case types.STUDENT_DEMOGRAPHICS_LOAD_END:
             return {...state, demographics: action.response.content || state.demographics};
+        case types.STUDENT_SCHEDULE_START:
+            return {...state, studentScheduleView: []};
+        case types.STUDENT_SCHEDULE_END:
+            return {...state, studentScheduleView: action.response};
+        case types.SET_STUDENT_SELECT:
+            let resp = action.response;
+            return {
+                ...state, fullName: resp.fullName,
+                gradeLevel: resp.gradeLevel,
+                school: resp.school
+            };
         case types.HOME_LOAD_END:
             return Utils.freezeObject(initialState);
+
         default:
             return state;
     }
