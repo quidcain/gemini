@@ -60,7 +60,7 @@ website:
   url: @website.base.url@
   context-path: @website.base.context-path@
 logging:
-  config: file:/Users/fran/Documents/Projects/UpperCase/project-gemini/portal/rest/src/main/resources/logback.xml
+  config: classpath:logback.xml
 
 property:
   load:
