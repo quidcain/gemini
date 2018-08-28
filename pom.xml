@@ -97,7 +97,7 @@
                 <main.db.password>12345678</main.db.password>
                 <main.db.driver.name>com.mysql.jdbc.Driver</main.db.driver.name>
                 <main.db.platform>mysql</main.db.platform>
-                <main.db.jpa.mode>none</main.db.jpa.mode>
+                <main.db.jpa.mode>update</main.db.jpa.mode>
                 <!--smax db props-->
                 <smax.db.jdbc.url>jdbc:mysql://localhost:3306/SRS</smax.db.jdbc.url>
                 <smax.db.user>srs</smax.db.user>
