@@ -42,16 +42,9 @@
                 <war.name>srs-api</war.name>
                 <admin.war.name>srs-admin-api</admin.war.name>
                 <!--main db props-->
-                <!--<main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>-->
-                <!--<main.db.user>PRDE_SRS</main.db.user>-->
-                <!--<main.db.password>pr234Srs987</main.db.password>-->
-                <!--<main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>-->
-                <!--<main.db.platform>oracle</main.db.platform>-->
-                <!--<main.db.jpa.mode>none</main.db.jpa.mode>-->
-
-                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi76-vip.oracleoutsourcing.com:11010/PMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
+                <main.db.jdbc.url>jdbc:oracle:thin:@auohsmaxi72-vip.oracleoutsourcing.com:11510/TMAX1O.ORACLEOUTSOURCING.COM</main.db.jdbc.url>
                 <main.db.user>PRDE_SRS</main.db.user>
-                <main.db.password>pr234Srs987</main.db.password>
+                <main.db.password>PRDE_SRS</main.db.password>
                 <main.db.driver.name>oracle.jdbc.driver.OracleDriver</main.db.driver.name>
                 <main.db.platform>oracle</main.db.platform>
                 <main.db.jpa.mode>none</main.db.jpa.mode>
